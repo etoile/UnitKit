@@ -234,7 +234,7 @@
  * To be a test class, a class (or its superclass) must conform to UKTest 
  * protocol.
  */
-NSArray *UKTestClasseNamesFromBundle (NSBundle *bundle);
+NSArray *UKTestClassNamesFromBundle(NSBundle *bundle);
 /**
  * Returns all the test method names sorted by name, for the given class.
  *

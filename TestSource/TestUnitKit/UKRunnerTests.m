@@ -130,7 +130,7 @@ static BOOL testedObjectInitialized = NO;
 #if !(TARGET_OS_IPHONE)
 - (void)testClassesFromBundle
 {
-    NSArray *testClasses = UKTestClasseNamesFromBundle(testBundle);
+    NSArray *testClasses = UKTestClassNamesFromBundle(testBundle);
 
     UKIntsEqual(2, [testClasses count]);
     UKTrue([testClasses containsObject: @"TestTwo"]);

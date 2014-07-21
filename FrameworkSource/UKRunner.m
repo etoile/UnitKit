@@ -490,7 +490,7 @@
 }
 
 /**
- * We must call UKTestClasseNamesFromBundle() after +willRunTestSuite, otherwise 
+ * We must call UKTestClassNamesFromBundle() after +willRunTestSuite, otherwise 
  * the wrong app object can be created in a UI related test suite on Mac OS X...
  * 
  * On Mac OS X, we have -bundleForClass: that invokes class_respondsToSelector() 
@@ -499,7 +499,7 @@
  * When no app object is available yet, an NSApplication instance will be 
  * created rather than the subclass instance we might want.
  *
- * This is why we don't call UKTestClasseNamesFromBundle() in
+ * This is why we don't call UKTestClassNamesFromBundle() in
  * -runTestsInBundle:principalClass:. 
  */
 - (void)runTestsWithClassNames: (NSArray *)testClassNames
@@ -514,7 +514,7 @@
 	}
 
 	NSArray *classNames =
-    		(testClassNames != nil ? testClassNames : UKTestClasseNamesFromBundle(bundle));
+    		(testClassNames != nil ? testClassNames : UKTestClassNamesFromBundle(bundle));
 
 	for (NSString *className in [self filterTestClassNames: classNames])
 	{
@@ -559,7 +559,7 @@ BOOL UKTestClassConformsToProtocol(Class aClass)
 	return isTestClass;
 }
 
-NSArray *UKTestClasseNamesFromBundle(NSBundle *bundle)
+NSArray *UKTestClassNamesFromBundle(NSBundle *bundle)
 {
 	NSMutableArray *testClasseNames = [NSMutableArray array];
 	int numClasses = objc_getClassList(NULL, 0);
