@@ -1104,7 +1104,6 @@
 		60A71B4E18B505DA0038CE05 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				INFOPLIST_FILE = FrameworkSource/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1123,7 +1122,6 @@
 		60A71B4F18B505DA0038CE05 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				INFOPLIST_FILE = FrameworkSource/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = (
