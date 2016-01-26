@@ -71,6 +71,9 @@
 {
 	@private
    	NSString *classRegex;
+	NSString *className;
+	NSString *methodRegex;
+	NSString *methodName;
 	int testClassesRun;
 	int testMethodsRun;
 }
@@ -100,7 +103,21 @@
  * See also -classRegex.
  */
 - (void)setClassRegex: (NSString *)aRegex;
-
+/**
+ * Only run tests in the class with this name. If set, classRegex is ignored.
+ */
+- (NSString *)className;
+- (void)setClassName: (NSString *)aName;
+/**
+ * Only run test methods matching this regex.
+ */
+- (NSString *)methodRegex;
+- (void)setMethodRegex: (NSString *)aRegex;
+/**
+ * Only run test methods with this name. If set, methodRegex is ignored.
+ */
+- (NSString *)methodName;
+- (void)setMethodName: (NSString *)aName;
 
 /** @taskunit Tool Support */
 

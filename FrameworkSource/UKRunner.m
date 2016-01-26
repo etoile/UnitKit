@@ -72,16 +72,11 @@
  * -parseArgumentsWithCurrentDirectory:. This NSUserDefaults use should probably 
  * be removed at some point.
  */
-- (NSString *)classRegexFromArgumentDomain
+- (NSString *)stringFromArgumentDomainForKey: (NSString *)key
 {
 	NSDictionary *argumentDomain = [[NSUserDefaults standardUserDefaults] 
     	volatileDomainForName: NSArgumentDomain];
-	NSString *regex = [argumentDomain objectForKey: @"c"];
-
-    if (regex != nil)
-    	return regex;
-
-    return [argumentDomain objectForKey: @"classRegex"];
+	return [argumentDomain objectForKey: key];
 }
 
 - (id)init
@@ -90,7 +85,15 @@
 	if (self == nil)
     	return nil;
 
-   	classRegex = [[self classRegexFromArgumentDomain] copy];
+	[self setClassRegex: [self stringFromArgumentDomainForKey: @"c"]];
+	if (nil == [self classRegex])
+	{
+		[self setClassRegex: [self stringFromArgumentDomainForKey: @"classRegex"]];
+	}
+	[self setClassName: [self stringFromArgumentDomainForKey: @"className"]];
+	[self setMethodRegex: [self stringFromArgumentDomainForKey: @"methodRegex"]];
+	[self setMethodName: [self stringFromArgumentDomainForKey: @"methodName"]];
+
     return self;
 }
 
@@ -98,6 +101,9 @@
 - (void)dealloc
 {
 	[classRegex release];
+	[className release];
+	[methodRegex release];
+	[methodName release];
     [super dealloc];
 }
 
@@ -112,6 +118,39 @@
 {
 	[classRegex autorelease];
     classRegex = [aRegex copy];
+}
+
+- (NSString *)className
+{
+	return className;
+}
+
+- (void)setClassName: (NSString *)aName
+{
+	[className autorelease];
+	className = [aName copy];
+}
+
+- (NSString *)methodRegex
+{
+	return methodRegex;
+}
+
+- (void)setMethodRegex: (NSString *)aRegex
+{
+	[methodRegex autorelease];
+	methodRegex = [aRegex copy];
+}
+
+- (NSString *)methodName
+{
+	return methodName;
+}
+
+- (void)setMethodName: (NSString *)aName
+{
+	[methodName autorelease];
+	methodName = [aName copy];
 }
 
 #pragma mark - Loading Test Bundles
@@ -217,7 +256,14 @@
 	NSArray *args = [[NSProcessInfo processInfo] arguments];
 	NSMutableArray *bundlePaths = [NSMutableArray array];
 	BOOL noOptions = ([args count] <= 1);
-
+	NSSet *paramOptions = [NSSet setWithObjects:
+						   @"-c",
+						   @"-classRegex",
+						   @"-className",
+						   @"-methodRegex",
+						   @"-methodName",
+						   nil];
+	
 	if (noOptions)
 		return bundlePaths;
 	
@@ -231,17 +277,33 @@
 		{
 			[[UKTestHandler handler] setQuiet: YES];
 		}
-		else if ([arg isEqualToString: @"-c"] || [arg isEqualToString: @"-classRegex"])
+		else if ([paramOptions containsObject: arg])
 		{
             i++;
 
             if (i >= [args count] || [[args objectAtIndex: i] hasPrefix: @"-"])
 			{
-				NSLog(@"-c argument must be followed by a test class regex");
+				NSLog(@"%@ argument must be followed by a parameter", arg);
 				exit(-1);
 			}
-
-			[self setClassRegex: [args objectAtIndex: i]];
+			NSString *param = [args objectAtIndex: i];
+			
+			if ([arg isEqualToString: @"-c"] || [arg isEqualToString: @"-classRegex"])
+			{
+				[self setClassRegex: param];
+			}
+			else if ([arg isEqualToString: @"-className"])
+			{
+				[self setClassName: param];
+			}
+			else if ([arg isEqualToString: @"-methodRegex"])
+			{
+				[self setMethodRegex: param];
+			}
+			else if ([arg isEqualToString: @"-methodName"])
+			{
+				[self setMethodName: param];
+			}
 		}
 		else
 		{
@@ -455,30 +517,64 @@
 
 	if (testClass != nil)
 	{
-		testMethods = UKTestMethodNamesFromClass(objc_getMetaClass(class_getName(testClass)));
+		testMethods = [self filterTestMethodNames: UKTestMethodNamesFromClass(objc_getMetaClass(class_getName(testClass)))];
 	}
 	[self runTests: testMethods onInstance: NO ofClass: testClass];
 
 	/* Test instance methods */
 
-	testMethods = UKTestMethodNamesFromClass(testClass);
+	testMethods = [self filterTestMethodNames: UKTestMethodNamesFromClass(testClass)];
 	[self runTests: testMethods onInstance: YES ofClass: testClass];
 }
 
 - (NSArray *)filterTestClassNames: (NSArray *)testClassNames
 {
-	NSMutableArray *filteredClassNames = [NSMutableArray array];
-
-	for (NSString *className in testClassNames)
+	if (nil != [self className])
 	{
-		if (classRegex == nil  || [className rangeOfString: [self classRegex]
-                                                   options: NSRegularExpressionSearch].location != NSNotFound)
+		if ([testClassNames containsObject: [self className]])
 		{
-			[filteredClassNames addObject: className];
+			return [NSArray arrayWithObject: [self className]];
+		}
+		return [NSArray array];
+	}
+
+	NSMutableArray *filteredClassNames = [NSMutableArray array];
+	
+	for (NSString *testClassName in testClassNames)
+	{
+		if (classRegex == nil || [testClassName rangeOfString: [self classRegex]
+		                                              options: NSRegularExpressionSearch].location != NSNotFound)
+		{
+			[filteredClassNames addObject: testClassName];
 		}
 	}
 
 	return filteredClassNames;
+}
+
+- (NSArray *)filterTestMethodNames: (NSArray *)testMethodNames
+{
+	if (nil != [self methodName])
+	{
+		if ([testMethodNames containsObject: [self methodName]])
+		{
+			return [NSArray arrayWithObject: [self methodName]];
+		}
+		return [NSArray array];
+	}
+	
+	NSMutableArray *filteredMethodNames = [NSMutableArray array];
+	
+	for (NSString *testMethodName in testMethodNames)
+	{
+		if ([self methodRegex] == nil || [testMethodName rangeOfString: [self methodRegex]
+															   options: NSRegularExpressionSearch].location != NSNotFound)
+		{
+			[filteredMethodNames addObject: testMethodName];
+		}
+	}
+	
+	return filteredMethodNames;
 }
 
 - (void)runTestsInBundle: (NSBundle *)bundle
