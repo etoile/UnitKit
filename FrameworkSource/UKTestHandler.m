@@ -152,7 +152,7 @@
 		if ([hint isEqual: @"errExceptionOnInit"] || [hint isEqual: @"errExceptionOnRelease"])
 		{
 			msg = [[self class] localizedString: hint];
-			msg = [NSString stringWithFormat: msg, NSStringFromClass(testClass), excstring];
+			msg = [NSString stringWithFormat: msg, NSStringFromClass(testClass), excstring, [exception callStackSymbols]];
 		}
 		else
 		{
@@ -160,7 +160,7 @@
 
 			msg = [[self class] localizedString: @"errExceptionInTestMethod"];
 			msg = [NSString stringWithFormat: msg, NSStringFromClass(testClass),
-			                                  testMethodName, excstring];
+			                                  testMethodName, excstring, [exception callStackSymbols]];
 		}
 
 		[self reportWarning: msg];
