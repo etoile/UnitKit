@@ -379,61 +379,70 @@
 	{
 		testMethodsRun++;
 
-		NSAutoreleasePool *pool = [NSAutoreleasePool new];
-        id object = nil;
-
-        // Create the object to test
-
-        if (instance)
-        {
-            object = [self newTestObjectOfClass: testClass];
-
-            // N.B.: If -init throws an exception or returns nil, we don't
-            // attempt to run any more methods on this class
-            if (object == nil)
-                return;
-        }
-        else
-        {
-            object = testClass;
-        }
-
-        // Run the test method
-
         @try
         {
-            SEL testSel = NSSelectorFromString(testMethodName);
-
-            /* This pool makes easier to separate autorelease issues between:
-               - test method
-               - test object configuration due to -init and -dealloc
-
-               For testing CoreObject, this also ensures all autoreleased
-               objects in relation to a db are deallocated before closing 
-               the db connection in -dealloc (see TestCommon.h in CoreObject 
-               for details) */
-            NSAutoreleasePool *localPool = [NSAutoreleasePool new];
-
-            [self runTest: testSel onObject: object class: testClass];
-            
-            [localPool release];
+            @autoreleasepool
+            {
+                id object = nil;
+                
+                // Create the object to test
+                
+                if (instance)
+                {
+                    object = [self newTestObjectOfClass: testClass];
+                    
+                    // N.B.: If -init throws an exception or returns nil, we don't
+                    // attempt to run any more methods on this class
+                    if (object == nil)
+                        return;
+                }
+                else
+                {
+                    object = testClass;
+                }
+                
+                // Run the test method
+                
+                @try
+                {
+                    SEL testSel = NSSelectorFromString(testMethodName);
+                    
+                    /* This pool makes easier to separate autorelease issues between:
+                     - test method
+                     - test object configuration due to -init and -dealloc
+                     
+                     For testing CoreObject, this also ensures all autoreleased
+                     objects in relation to a db are deallocated before closing
+                     the db connection in -dealloc (see TestCommon.h in CoreObject
+                     for details) */
+                    NSAutoreleasePool *localPool = [NSAutoreleasePool new];
+                    
+                    [self runTest: testSel onObject: object class: testClass];
+                    
+                    [localPool release];
+                }
+                @catch (NSException *exception)
+                {
+                    [[UKTestHandler handler] reportException: exception
+                                                     inClass: testClass
+                                                        hint: testMethodName];
+                }
+                
+                // Release the object
+                
+                if (instance)
+                {
+                    [self releaseTestObject: object];
+                }
+            }
         }
         @catch (NSException *exception)
         {
             [[UKTestHandler handler] reportException: exception
                                              inClass: testClass
-        	                                    hint: testMethodName];
+                                                hint: nil];
         }
-
-        // Release the object
-
-        if (instance)
-        {
-            [self releaseTestObject: object];
-        }
-
-		[pool release];
-	}
+    }
 }
 
 - (void)runTestsInClass: (Class)testClass
