@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		03BC00BE0DEE32AD009AFC82 /* Icon-Pass.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 03BC00BC0DEE32AD009AFC82 /* Icon-Pass.tiff */; };
-		03BC00BF0DEE32AD009AFC82 /* Icon-Fail.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 03BC00BD0DEE32AD009AFC82 /* Icon-Fail.tiff */; };
 		6048463118B61187006E4EDC /* TestOne.m in Sources */ = {isa = PBXBuildFile; fileRef = AE70B66505F71D5500D56367 /* TestOne.m */; };
 		6048463218B61187006E4EDC /* TestTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = AE70B72405F73A1F00D56367 /* TestTwo.m */; };
 		6048463318B61187006E4EDC /* TestThree.m in Sources */ = {isa = PBXBuildFile; fileRef = AE70B72A05F73A3F00D56367 /* TestThree.m */; };
@@ -33,8 +31,6 @@
 		60A71B6D18B507090038CE05 /* UKTest.h in Headers */ = {isa = PBXBuildFile; fileRef = AE73F21F05F1573200CAFD4D /* UKTest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		60A71B6E18B507090038CE05 /* UKTestHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = AE613E6705F181AE009B020F /* UKTestHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		60A71B6F18B507090038CE05 /* UKRunner.h in Headers */ = {isa = PBXBuildFile; fileRef = AE923D8905C3B9EC00549058 /* UKRunner.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		60A71B7218B5072E0038CE05 /* Icon-Pass.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 03BC00BC0DEE32AD009AFC82 /* Icon-Pass.tiff */; };
-		60A71B7318B5072E0038CE05 /* Icon-Fail.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 03BC00BD0DEE32AD009AFC82 /* Icon-Fail.tiff */; };
 		60A71B7718B507910038CE05 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = AEEB74D006B1BEFD00BE53E8 /* LICENSE */; };
 		60B98EF1180560BA00D1FFFF /* class.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = AE8CCF680680B539008CA594 /* class.h */; };
 		60B98EF2180560BA00D1FFFF /* class.m in CopyFiles */ = {isa = PBXBuildFile; fileRef = AE8CCF690680B539008CA594 /* class.m */; };
@@ -173,8 +169,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		03BC00BC0DEE32AD009AFC82 /* Icon-Pass.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "Icon-Pass.tiff"; sourceTree = "<group>"; };
-		03BC00BD0DEE32AD009AFC82 /* Icon-Fail.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "Icon-Fail.tiff"; sourceTree = "<group>"; };
 		32DBCF5E0370ADEE00C91783 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		600CE53109F2474F008BA30D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		6048463418B61E4F006E4EDC /* NEWS.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = NEWS.md; sourceTree = "<group>"; };
@@ -321,7 +315,6 @@
 		0867D691FE84028FC02AAC07 /* UnitKit */ = {
 			isa = PBXGroup;
 			children = (
-				60E360F81D941CCC00220DAC /* Default-568h@2x.png */,
 				6048463E18B6373A006E4EDC /* README.md */,
 				6048463C18B6373A006E4EDC /* INSTALL.Cocoa.md */,
 				6048463D18B6373A006E4EDC /* INSTALL.GNUstep.md */,
@@ -394,6 +387,7 @@
 			children = (
 				60E23C3318B529EE00CE38D0 /* main.m */,
 				60E23C3718B52C0600CE38D0 /* Info.plist */,
+				60E360F81D941CCC00220DAC /* Default-568h@2x.png */,
 			);
 			name = "iOS Compatibility";
 			path = iOSCompatibility;
@@ -444,8 +438,6 @@
 		AE923A0F05C3B11600549058 /* FrameworkSource */ = {
 			isa = PBXGroup;
 			children = (
-				03BC00BC0DEE32AD009AFC82 /* Icon-Pass.tiff */,
-				03BC00BD0DEE32AD009AFC82 /* Icon-Fail.tiff */,
 				AE73F21F05F1573200CAFD4D /* UKTest.h */,
 				AE613E6705F181AE009B020F /* UKTestHandler.h */,
 				AE613E6805F181AE009B020F /* UKTestHandler.m */,
@@ -739,8 +731,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				60A71B7718B507910038CE05 /* LICENSE in Resources */,
-				60A71B7218B5072E0038CE05 /* Icon-Pass.tiff in Resources */,
-				60A71B7318B5072E0038CE05 /* Icon-Fail.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -757,8 +747,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AEEB74D106B1BEFD00BE53E8 /* LICENSE in Resources */,
-				03BC00BE0DEE32AD009AFC82 /* Icon-Pass.tiff in Resources */,
-				03BC00BF0DEE32AD009AFC82 /* Icon-Fail.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
