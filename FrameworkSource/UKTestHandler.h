@@ -67,7 +67,7 @@
  *
  * For more details, see -setDelegate:.
  */
-- (id)delegate;
+@property (nonatomic, assign) id delegate;
 /**
  * Sets a delegate that can implement the same reporting methods than
  * UKTestHandler.
@@ -77,7 +77,6 @@
  * As a result, what was previously reported by UKTestHandler is not going to
  * be automatically logged in the console unless the delegate does it.
  */
-- (void)setDelegate: (id)aDelegate;
 /**
  * Returns whether the handler should report just the test failures and 
  * uncaught exceptions, but nothing on test successes.
@@ -87,12 +86,11 @@
  * -isQuiet is initialized to YES if the argument <em>-q</em> is present in the 
  * <em>ukrun</em> arguments.
  */
-- (BOOL)isQuiet;
+@property (nonatomic, getter=isQuiet) BOOL quiet;
 /**
  * Tells the handler to report just the test failures and uncaught exceptions,
  * but nothing on test successes.
  */
-- (void)setQuiet: (BOOL)isQuiet;
 /**
  * If we have a delegate, then by all means use it. If we don't, then check to
  * see if we have any errors which should be reported off to std out.
@@ -139,20 +137,20 @@
  *
  * See -reportStatus:inFile:line:message:.
  */
-- (int)testsPassed;
+@property (nonatomic, readonly) int testsPassed;
 /**
  * Returns the current number of test failures.
  *
  * See -reportStatus:inFile:line:message:.
  */
-- (int)testsFailed;
+@property (nonatomic, readonly) int testsFailed;
 /**
  * Returns the current number of exceptions caught by UKRunner and reported to
  * the test handler.
  *
  * See -reportException:inClass:hint:.
  */
-- (int)exceptionsReported;
+@property (nonatomic, readonly) int exceptionsReported;
 
 
 /** @taskunit Basic Test Assertions */

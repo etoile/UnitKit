@@ -52,7 +52,7 @@ static BOOL testedObjectInitialized = NO;
 
 @implementation UKRunnerTests
 
-- (id)init
+- (instancetype)init
 {
 	self = [super init];
     if (self == nil)
@@ -61,8 +61,8 @@ static BOOL testedObjectInitialized = NO;
 	handler = [UKTestHandler handler];
 
 #if !(TARGET_OS_IPHONE)
-	NSString *mainTestBundlePath = [[NSBundle bundleForClass: [self class]] bundlePath];
-	NSString *testBundlePath = [[mainTestBundlePath stringByDeletingLastPathComponent] 
+	NSString *mainTestBundlePath = [NSBundle bundleForClass: [self class]].bundlePath;
+	NSString *testBundlePath = [mainTestBundlePath.stringByDeletingLastPathComponent 
 		stringByAppendingPathComponent: @"TestBundle.bundle"];
 
 	testBundle = [[NSBundle alloc] initWithPath: testBundlePath];
@@ -101,23 +101,23 @@ static BOOL testedObjectInitialized = NO;
 	                  target: self
 	                argument: nil
 	                   order: 0
-	                   modes: [NSArray arrayWithObject: NSDefaultRunLoopMode]];
+	                   modes: @[NSDefaultRunLoopMode]];
 }
 
 - (void)runLoopTrigger
 {
 	NSThread *thread = [NSThread currentThread];
-	[[thread threadDictionary] setObject: @"YES" forKey: @"UKLoopTriggerRan"];
+	thread.threadDictionary[@"UKLoopTriggerRan"] = @"YES";
 }
 
 - (void)testRunLoopAdditionExecuted
 {
     NSThread *thread = [NSThread currentThread];
-    NSString *result = [[thread threadDictionary] objectForKey: @"UKLoopTriggerRan"];
+    NSString *result = thread.threadDictionary[@"UKLoopTriggerRan"];
 
     UKStringsEqual(result, @"YES");
 
-    [[thread threadDictionary] removeObjectForKey:@"UKLoopTriggerRan"];
+    [thread.threadDictionary removeObjectForKey:@"UKLoopTriggerRan"];
 }
 
 - (void)testRunLoopMode
@@ -158,9 +158,9 @@ static BOOL testedObjectInitialized = NO;
 - (void)testReportInitException
 {
 	UKRunner *runner = [[UKRunner alloc] init];
-	[handler setDelegate: self];
+	handler.delegate = self;
 
-	UKDoesNotRaiseException([runner runTests: [NSArray arrayWithObject: @"testEmpty"]
+	UKDoesNotRaiseException([runner runTests: @[@"testEmpty"]
                                   onInstance: YES
                                      ofClass: [TestObjectInit class]]);
 
@@ -175,9 +175,9 @@ static BOOL testedObjectInitialized = NO;
 - (void)testReportDeallocException
 {
 	UKRunner *runner = [[UKRunner alloc] init];
-	[handler setDelegate: self];
+	handler.delegate = self;
 
-	UKDoesNotRaiseException([runner runTests: [NSArray arrayWithObject: @"testEmpty"]
+	UKDoesNotRaiseException([runner runTests: @[@"testEmpty"]
                                   onInstance: YES
                                      ofClass: [TestObjectDealloc class]]);
 
@@ -192,9 +192,9 @@ static BOOL testedObjectInitialized = NO;
 - (void)testReportTestMethodException
 {
 	UKRunner *runner = [[UKRunner alloc] init];
-	[handler setDelegate: self];
+	handler.delegate = self;
 
-	UKDoesNotRaiseException([runner runTests: [NSArray arrayWithObject: @"testRaisesException"]
+	UKDoesNotRaiseException([runner runTests: @[@"testRaisesException"]
                                   onInstance: YES
                                      ofClass: [TestObjectTestMethod class]]);
 

@@ -76,23 +76,23 @@
 {
 	NSDictionary *argumentDomain = [[NSUserDefaults standardUserDefaults] 
     	volatileDomainForName: NSArgumentDomain];
-	return [argumentDomain objectForKey: key];
+	return argumentDomain[key];
 }
 
-- (id)init
+- (instancetype)init
 {
 	self = [super init];
 	if (self == nil)
     	return nil;
 
-	[self setClassRegex: [self stringFromArgumentDomainForKey: @"c"]];
-	if (nil == [self classRegex])
+	self.classRegex = [self stringFromArgumentDomainForKey: @"c"];
+	if (nil == self.classRegex)
 	{
-		[self setClassRegex: [self stringFromArgumentDomainForKey: @"classRegex"]];
+		self.classRegex = [self stringFromArgumentDomainForKey: @"classRegex"];
 	}
-	[self setClassName: [self stringFromArgumentDomainForKey: @"className"]];
-	[self setMethodRegex: [self stringFromArgumentDomainForKey: @"methodRegex"]];
-	[self setMethodName: [self stringFromArgumentDomainForKey: @"methodName"]];
+	self.className = [self stringFromArgumentDomainForKey: @"className"];
+	self.methodRegex = [self stringFromArgumentDomainForKey: @"methodRegex"];
+	self.methodName = [self stringFromArgumentDomainForKey: @"methodName"];
 
     return self;
 }
@@ -161,13 +161,13 @@
 
 	if (testBundle == nil)
 	{
-		NSLog(@"\n == Test bundle '%@' could not be found ==\n", [bundlePath lastPathComponent]);
+		NSLog(@"\n == Test bundle '%@' could not be found ==\n", bundlePath.lastPathComponent);
 		return nil;
 	}
 
-	if (![[bundlePath pathExtension] isEqual: [self testBundleExtension]])
+	if (![bundlePath.pathExtension isEqual: [self testBundleExtension]])
 	{
-		NSLog(@"\n == Directory '%@' is not a test bundle ==\n", [bundlePath lastPathComponent]);
+		NSLog(@"\n == Directory '%@' is not a test bundle ==\n", bundlePath.lastPathComponent);
 	}
 
 	NSError *error = nil;
@@ -180,7 +180,7 @@
 	if (![testBundle loadAndReturnError: &error])
 #endif
 	{
-		NSLog(@"\n == Test bundle could not be loaded: %@ ==\n", [error description]);
+		NSLog(@"\n == Test bundle could not be loaded: %@ ==\n", error.description);
 		return nil;
 	}
 	return testBundle;
@@ -206,7 +206,7 @@
 {
 	NSArray *bundlePaths = [self parseArgumentsWithCurrentDirectory: cwd];
 	NSAssert(bundlePaths != nil, @"");
-	BOOL hadBundleInArgument = ([bundlePaths count] > 0);
+	BOOL hadBundleInArgument = (bundlePaths.count > 0);
 
 	if (hadBundleInArgument)
     	return bundlePaths;
@@ -219,15 +219,14 @@
 
 + (int)runTests
 {
-	NSString *version = [[[NSBundle bundleForClass: self] infoDictionary]
-    	objectForKey: @"CFBundleShortVersionString"];
+	NSString *version = [NSBundle bundleForClass: self].infoDictionary[@"CFBundleShortVersionString"];
 
 	NSLog(@"UnitKit version %@ (Etoile)", version);
 
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	UKRunner *runner = [[UKRunner alloc] init];
 
-	NSString *cwd = [[NSFileManager defaultManager] currentDirectoryPath];
+	NSString *cwd = [NSFileManager defaultManager].currentDirectoryPath;
 
 	for (NSString *bundlePath in [runner bundlePathsFromArgumentsAndCurrentDirectory: cwd])
 	{
@@ -253,9 +252,9 @@
  */
 - (NSArray *)parseArgumentsWithCurrentDirectory: (NSString *)cwd
 {
-	NSArray *args = [[NSProcessInfo processInfo] arguments];
+	NSArray *args = [NSProcessInfo processInfo].arguments;
 	NSMutableArray *bundlePaths = [NSMutableArray array];
-	BOOL noOptions = ([args count] <= 1);
+	BOOL noOptions = (args.count <= 1);
 	NSSet *paramOptions = [NSSet setWithObjects:
 						   @"-c",
 						   @"-classRegex",
@@ -267,9 +266,9 @@
 	if (noOptions)
 		return bundlePaths;
 	
-	for (int i = 1; i < [args count]; i++)
+	for (int i = 1; i < args.count; i++)
 	{
-		NSString *arg = [args objectAtIndex: i];
+		NSString *arg = args[i];
 
 		/* We parse all supported options to skip them and process the test 
 		   bundle list at the end */
@@ -281,33 +280,33 @@
 		{
             i++;
 
-            if (i >= [args count] || [[args objectAtIndex: i] hasPrefix: @"-"])
+            if (i >= args.count || [args[i] hasPrefix: @"-"])
 			{
 				NSLog(@"%@ argument must be followed by a parameter", arg);
 				exit(-1);
 			}
-			NSString *param = [args objectAtIndex: i];
+			NSString *param = args[i];
 			
 			if ([arg isEqualToString: @"-c"] || [arg isEqualToString: @"-classRegex"])
 			{
-				[self setClassRegex: param];
+				self.classRegex = param;
 			}
 			else if ([arg isEqualToString: @"-className"])
 			{
-				[self setClassName: param];
+				self.className = param;
 			}
 			else if ([arg isEqualToString: @"-methodRegex"])
 			{
-				[self setMethodRegex: param];
+				self.methodRegex = param;
 			}
 			else if ([arg isEqualToString: @"-methodName"])
 			{
-				[self setMethodName: param];
+				self.methodName = param;
 			}
 		}
 		else
 		{
-			[bundlePaths addObject: [args objectAtIndex: i]];
+			[bundlePaths addObject: args[i]];
 		}
 	}
 	return bundlePaths;
@@ -316,12 +315,12 @@
 - (void)runTestsInBundleAtPath: (NSString *)bundlePath
               currentDirectory: (NSString *)cwd
 {
-	bundlePath = [bundlePath stringByExpandingTildeInPath];
+	bundlePath = bundlePath.stringByExpandingTildeInPath;
 
-	if (![bundlePath isAbsolutePath])
+	if (!bundlePath.absolutePath)
 	{
 		bundlePath = [cwd stringByAppendingPathComponent: bundlePath];
-		bundlePath = [bundlePath stringByStandardizingPath];
+		bundlePath = bundlePath.stringByStandardizingPath;
 	}
 
 	NSLog(@"Looking for bundle at path: %@", bundlePath);
@@ -340,11 +339,11 @@
 
 - (void)internalRunTest: (NSTimer *)timer
 {
-	NSDictionary *testParameters = [timer userInfo];
-	NSString *testMethodName = [testParameters objectForKey: @"TestSelector"];
+	NSDictionary *testParameters = timer.userInfo;
+	NSString *testMethodName = testParameters[@"TestSelector"];
 	SEL testSel = NSSelectorFromString(testMethodName);
-	id testObject = [testParameters objectForKey: @"TestObject"];
-	Class testClass = [testParameters objectForKey: @"TestClass"];
+	id testObject = testParameters[@"TestObject"];
+	Class testClass = testParameters[@"TestClass"];
 
 	// N.B.: On GNUstep, NSTimer ignores exceptions
 	// so they wouldn't reach the @catch block in -runTests:onInstance:ofClass:,
@@ -366,10 +365,9 @@
 	NSLog(@"=== [%@ %@] ===", [testObject class], NSStringFromSelector(testSelector));
 
 	NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
-	NSDictionary *testParams = [NSDictionary dictionaryWithObjectsAndKeys:
-		testObject, @"TestObject",
-		NSStringFromSelector(testSelector), @"TestSelector",
-	 	testClass, @"TestClass", nil];
+	NSDictionary *testParams = @{@"TestObject": testObject,
+		@"TestSelector": NSStringFromSelector(testSelector),
+	 	@"TestClass": testClass};
 	NSTimer *runTimer = [NSTimer scheduledTimerWithTimeInterval: 0
 	                                                     target: self
 	                                                   selector: @selector(internalRunTest:)
@@ -378,7 +376,7 @@
 
 	[runTimer retain];
 
-	while ([runTimer isValid])
+	while (runTimer.valid)
 	{
 		// NOTE: nil, [NSDate date], time intervals such as 0, 0.0000001 or
 		// LDBL_EPSILON don't work on GNUstep.
@@ -529,11 +527,11 @@
 
 - (NSArray *)filterTestClassNames: (NSArray *)testClassNames
 {
-	if (nil != [self className])
+	if (nil != self.className)
 	{
-		if ([testClassNames containsObject: [self className]])
+		if ([testClassNames containsObject: self.className])
 		{
-			return [NSArray arrayWithObject: [self className]];
+			return @[self.className];
 		}
 		return [NSArray array];
 	}
@@ -542,7 +540,7 @@
 	
 	for (NSString *testClassName in testClassNames)
 	{
-		if (classRegex == nil || [testClassName rangeOfString: [self classRegex]
+		if (classRegex == nil || [testClassName rangeOfString: self.classRegex
 		                                              options: NSRegularExpressionSearch].location != NSNotFound)
 		{
 			[filteredClassNames addObject: testClassName];
@@ -554,11 +552,11 @@
 
 - (NSArray *)filterTestMethodNames: (NSArray *)testMethodNames
 {
-	if (nil != [self methodName])
+	if (nil != self.methodName)
 	{
-		if ([testMethodNames containsObject: [self methodName]])
+		if ([testMethodNames containsObject: self.methodName])
 		{
-			return [NSArray arrayWithObject: [self methodName]];
+			return @[self.methodName];
 		}
 		return [NSArray array];
 	}
@@ -567,7 +565,7 @@
 	
 	for (NSString *testMethodName in testMethodNames)
 	{
-		if ([self methodRegex] == nil || [testMethodName rangeOfString: [self methodRegex]
+		if (self.methodRegex == nil || [testMethodName rangeOfString: self.methodRegex
 															   options: NSRegularExpressionSearch].location != NSNotFound)
 		{
 			[filteredMethodNames addObject: testMethodName];
@@ -583,7 +581,7 @@
 
 	[self runTestsWithClassNames: nil
                         inBundle: bundle
-                  principalClass: [bundle principalClass]];
+                  principalClass: bundle.principalClass];
 }
 
 - (void)runTestsWithClassNames: (NSArray *)testClassNames
@@ -621,9 +619,9 @@
 	NSArray *classNames =
     		(testClassNames != nil ? testClassNames : UKTestClassNamesFromBundle(bundle));
 
-	for (NSString *className in [self filterTestClassNames: classNames])
+	for (NSString *name in [self filterTestClassNames: classNames])
 	{
-        [self runTestsInClass: NSClassFromString(className)];
+        [self runTestsInClass: NSClassFromString(name)];
 	}
 
 	if ([principalClass respondsToSelector: @selector(didRunTestSuite)])
@@ -638,9 +636,9 @@
 
 - (int)reportTestResults
 {
-	int testsPassed = [[UKTestHandler handler] testsPassed];
-	int testsFailed = [[UKTestHandler handler] testsFailed];
-	int exceptionsReported = [[UKTestHandler handler] exceptionsReported];
+	int testsPassed = [UKTestHandler handler].testsPassed;
+	int testsFailed = [UKTestHandler handler].testsFailed;
+	int exceptionsReported = [UKTestHandler handler].exceptionsReported;
 
 	// TODO: May be be extract in -testResultSummary
 	NSLog(@"Result: %i classes, %i methods, %i tests, %i failed, %i exceptions",

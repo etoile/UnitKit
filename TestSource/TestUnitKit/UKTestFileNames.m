@@ -23,14 +23,14 @@
 
 @implementation UKTestFileNames
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self == nil)
     	return nil;
 
 	handler = [UKTestHandler handler];
-	[handler setDelegate: self];
+	handler.delegate = self;
 	actualFilename = [[NSString alloc] initWithCString: __FILE__
 	                                          encoding: NSUTF8StringEncoding];
 	return self;

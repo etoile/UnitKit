@@ -122,14 +122,14 @@
 
 		if (!quiet)
 		{
-			NSLog(@"%s:%i %s\n", filename, line, [msg UTF8String]);
+			NSLog(@"%s:%i %s\n", filename, line, msg.UTF8String);
 		}
 	}
 	else
 	{
 		testsFailed++;
 
-		NSLog(@"%s:%i: warning: %s\n", filename, line, [msg UTF8String]);
+		NSLog(@"%s:%i: warning: %s\n", filename, line, msg.UTF8String);
 	}
 }
 
@@ -152,7 +152,7 @@
 		if ([hint isEqual: @"errExceptionOnInit"] || [hint isEqual: @"errExceptionOnRelease"])
 		{
 			msg = [[self class] localizedString: hint];
-			msg = [NSString stringWithFormat: msg, NSStringFromClass(testClass), excstring, [exception callStackSymbols]];
+			msg = [NSString stringWithFormat: msg, NSStringFromClass(testClass), excstring, exception.callStackSymbols];
 		}
 		else
 		{
@@ -160,7 +160,7 @@
 
 			msg = [[self class] localizedString: @"errExceptionInTestMethod"];
 			msg = [NSString stringWithFormat: msg, NSStringFromClass(testClass),
-			                                  testMethodName, excstring, [exception callStackSymbols]];
+			                                  testMethodName, excstring, exception.callStackSymbols];
 		}
 
 		[self reportWarning: msg];
@@ -175,7 +175,7 @@
 	}
 	else
 	{
-		NSLog(@":: warning: %s\n", [msg UTF8String]);
+		NSLog(@":: warning: %s\n", msg.UTF8String);
 	}
 }
 
@@ -652,11 +652,11 @@
 	if (![exception isKindOfClass: [NSException class]])
 	{
 		NSString *msg = [UKTestHandler localizedString: @"msgUKSpecificNSExceptionRaised.failNotNSException"];
-		msg = [NSString stringWithFormat: msg, [exception description]];
+		msg = [NSString stringWithFormat: msg, exception.description];
 
 		[self reportStatus: NO inFile: filename line: line message: msg];
 	}
-	else if ([[exception name] isEqualToString: expected])
+	else if ([exception.name isEqualToString: expected])
 	{
 		NSString *msg = [UKTestHandler localizedString: @"msgUKSpecificNSExceptionRaised.pass"];
 		msg = [NSString stringWithFormat: msg, expected];
@@ -666,7 +666,7 @@
 	else
 	{
 		NSString *msg = [UKTestHandler localizedString: @"msgUKSpecificNSExceptionRaised.fail"];
-		msg = [NSString stringWithFormat: msg, expected, [exception name]];
+		msg = [NSString stringWithFormat: msg, expected, exception.name];
 
 		[self reportStatus: NO inFile: filename line: line message: msg];
 	}

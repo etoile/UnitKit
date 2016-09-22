@@ -95,29 +95,25 @@
  *
  * See also -setClassRegex:.
  */
-- (NSString *)classRegex;
+@property (nonatomic, copy) NSString *classRegex;
 /**
  * Sets the regex string used to match classes to be tested (among the 
  * classes that conforms to UKTest).
  *
  * See also -classRegex.
  */
-- (void)setClassRegex: (NSString *)aRegex;
 /**
  * Only run tests in the class with this name. If set, classRegex is ignored.
  */
-- (NSString *)className;
-- (void)setClassName: (NSString *)aName;
+@property (nonatomic, copy) NSString *className;
 /**
  * Only run test methods matching this regex.
  */
-- (NSString *)methodRegex;
-- (void)setMethodRegex: (NSString *)aRegex;
+@property (nonatomic, copy) NSString *methodRegex;
 /**
  * Only run test methods with this name. If set, methodRegex is ignored.
  */
-- (NSString *)methodName;
-- (void)setMethodName: (NSString *)aName;
+@property (nonatomic, copy) NSString *methodName;
 
 /** @taskunit Tool Support */
 

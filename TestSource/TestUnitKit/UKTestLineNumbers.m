@@ -23,14 +23,14 @@
 
 @implementation UKTestLineNumbers
 
-- (id)init
+- (instancetype)init
 {
 	self = [super init];
     if (self == nil)
     	return nil;
 
 	handler = [UKTestHandler handler];
-	[handler setDelegate: self];
+	handler.delegate = self;
 	return self;
 }
 
