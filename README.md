@@ -10,6 +10,8 @@ License
 Version
 : 1.5
 
+[![Build Status](https://travis-ci.org/etoile/UnitKit.png?branch=master)](https://travis-ci.org/etoile/UnitKit)
+
 UnitKit is a minimalistic unit testing framework that supports Mac OS X, iOS and 
 GNUstep. 
 
@@ -33,7 +35,7 @@ The UnitKit core features are:
 - Tested method and class choice based on a regex
 - Verbose and quiet ouput
 - Optional ukrun tool to run test suites packaged in test bundles
-- Xcode 3 and higher test suite templates
+- Xcode test suite templates
 
 To know more about UnitKit: <http://www.etoile-project.org/dev/UnitKit>
 
