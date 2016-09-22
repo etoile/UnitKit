@@ -4,10 +4,10 @@ UnitKit Mac OS X and iOS INSTALL
 Required software
 -----------------
 
-In addition to Xcode 4 or higher, you need Mac OS X 10.6 or higher to compile 
+In addition to Xcode 4 or higher, you need Mac OS X 10.7 or higher to compile 
 UnitKit.
 
-For test suites written with UnitKit, either Mac OS X 10.6 or higher, or iOS 5 
+For test suites written with UnitKit, either Mac OS X 10.7 or higher, or iOS 7 
 or higher are required to run them.
 
 

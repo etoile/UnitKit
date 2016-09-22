@@ -1,6 +1,11 @@
 UnitKit NEWS
 ============
 
+1.6 (CoreObject 0.6)
+--------------------
+
+- Migrated to modern Objective-C and ARC
+
 1.5 (CoreObject 0.5)
 --------------------
 

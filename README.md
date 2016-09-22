@@ -30,7 +30,7 @@ The UnitKit core features are:
 - Run loop integration for asynchronous testing
 - Uncaught exception reporting
 - Delegate methods to signal a test suite will start or just ended
-- Tested class choice based on a regex
+- Tested method and class choice based on a regex
 - Verbose and quiet ouput
 - Optional ukrun tool to run test suites packaged in test bundles
 - Xcode 3 and higher test suite templates
@@ -53,9 +53,8 @@ Read INSTALL.Cocoa.md and INSTALL.GNUstep.md documents.
 Mac OS X support
 ----------------
 
-Both Cocoa and Xcode 4 support are actively maintained, and used by several 
-Etoile modules that can be built on Mac OS X. However Xcode 3 is not maintained 
-anymore.
+Both Cocoa and Xcode support are actively maintained, and used by several 
+Etoile modules that can be built on Mac OS X.
 
 
 How to use UnitKit with Mac OS X
