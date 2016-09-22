@@ -68,11 +68,6 @@
  * For common use cases, see +[NSObject willRunTestSuite]. 
  */
 @interface UKRunner : NSObject
-{
-	@private
-	int testClassesRun;
-	int testMethodsRun;
-}
 
 
 /** @taskunit Settings */

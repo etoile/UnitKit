@@ -45,6 +45,11 @@
 
 
 @implementation UKRunner
+{
+	int _testClassesRun;
+	int _testMethodsRun;
+    BOOL _releasing;
+}
 
 #pragma mark - Localization Support
 
@@ -340,7 +345,7 @@
 {
 	for (NSString *testMethodName in testMethods)
 	{
-		testMethodsRun++;
+		_testMethodsRun++;
 
         @try
         {
@@ -352,10 +357,13 @@
         }
         @catch (NSException *exception)
         {
+        	id hint = (_releasing ? @"errExceptionOnRelease" : nil);
+
             [[UKTestHandler handler] reportException: exception
                                              inClass: testClass
-                                                hint: nil];
+                                                hint: hint];
         }
+        _releasing = NO;
     }
 }
 
@@ -419,10 +427,13 @@
     {
         @try
         {
+        	_releasing = YES;
             object = nil;
         }
         @catch (NSException *exception)
         {
+        	// N.B.: With ARC, we usually catch dealloc exception later in the
+            // caller, when the enclosing autorelease pool goes away.
             [[UKTestHandler handler] reportException: exception
                                              inClass: [object class]
                                                 hint: @"errExceptionOnRelease"];
@@ -432,7 +443,7 @@
 
 - (void)runTestsInClass: (Class)testClass
 {
-	testClassesRun++;
+	_testClassesRun++;
 
 	NSArray *testMethods = nil;
 
@@ -567,7 +578,7 @@
 
 	// TODO: May be be extract in -testResultSummary
 	NSLog(@"Result: %i classes, %i methods, %i tests, %i failed, %i exceptions",
-	  testClassesRun, testMethodsRun, (testsPassed + testsFailed), testsFailed, exceptionsReported);
+	  _testClassesRun, _testMethodsRun, (testsPassed + testsFailed), testsFailed, exceptionsReported);
 
 	return (testsFailed == 0 && exceptionsReported == 0 ? 0 : -1);
 }
