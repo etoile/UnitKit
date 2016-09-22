@@ -35,7 +35,6 @@
 		60A71B6F18B507090038CE05 /* UKRunner.h in Headers */ = {isa = PBXBuildFile; fileRef = AE923D8905C3B9EC00549058 /* UKRunner.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		60A71B7218B5072E0038CE05 /* Icon-Pass.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 03BC00BC0DEE32AD009AFC82 /* Icon-Pass.tiff */; };
 		60A71B7318B5072E0038CE05 /* Icon-Fail.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 03BC00BD0DEE32AD009AFC82 /* Icon-Fail.tiff */; };
-		60A71B7418B5072E0038CE05 /* UKTestHandler.strings in Resources */ = {isa = PBXBuildFile; fileRef = AEFFFA70060140EB0002576C /* UKTestHandler.strings */; };
 		60A71B7718B507910038CE05 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = AEEB74D006B1BEFD00BE53E8 /* LICENSE */; };
 		60B98EF1180560BA00D1FFFF /* class.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = AE8CCF680680B539008CA594 /* class.h */; };
 		60B98EF2180560BA00D1FFFF /* class.m in CopyFiles */ = {isa = PBXBuildFile; fileRef = AE8CCF690680B539008CA594 /* class.m */; };
@@ -48,6 +47,7 @@
 		60E23C0D18B5134100CE38D0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60E23C0C18B5134100CE38D0 /* CoreGraphics.framework */; };
 		60E23C2318B5135F00CE38D0 /* libUnitKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60A71B4218B505DA0038CE05 /* libUnitKit.a */; };
 		60E23C3418B529EE00CE38D0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E23C3318B529EE00CE38D0 /* main.m */; };
+		60E360F91D941CCC00220DAC /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 60E360F81D941CCC00220DAC /* Default-568h@2x.png */; };
 		6642F86618BEAAAF00E30BFF /* UnitKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* UnitKit.framework */; };
 		AE390EF10724F2530036A22B /* TestFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEBED01906AFADB000451E26 /* TestFramework.framework */; };
 		AE55498B06C5ACDC005FF2F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE55498A06C5ACDC005FF2F3 /* Foundation.framework */; };
@@ -73,7 +73,6 @@
 		AEBED02906AFAE7800451E26 /* TestClass.h in Headers */ = {isa = PBXBuildFile; fileRef = AEBED02706AFAE7800451E26 /* TestClass.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AEBED02A06AFAE7800451E26 /* TestClass.m in Sources */ = {isa = PBXBuildFile; fileRef = AEBED02806AFAE7800451E26 /* TestClass.m */; };
 		AEEB74D106B1BEFD00BE53E8 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = AEEB74D006B1BEFD00BE53E8 /* LICENSE */; };
-		AEFFFA71060140EB0002576C /* UKTestHandler.strings in Resources */ = {isa = PBXBuildFile; fileRef = AEFFFA70060140EB0002576C /* UKTestHandler.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -207,6 +206,7 @@
 		60E23C0C18B5134100CE38D0 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		60E23C3318B529EE00CE38D0 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		60E23C3718B52C0600CE38D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		60E360F81D941CCC00220DAC /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* UnitKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UnitKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE55498A06C5ACDC005FF2F3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		AE613E6705F181AE009B020F /* UKTestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKTestHandler.h; sourceTree = "<group>"; usesTabs = 0; };
@@ -236,7 +236,6 @@
 		AEBED02806AFAE7800451E26 /* TestClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestClass.m; sourceTree = "<group>"; usesTabs = 0; };
 		AEBED16806B0603600451E26 /* NOTICE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = NOTICE; sourceTree = "<group>"; };
 		AEEB74D006B1BEFD00BE53E8 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		AEFFFA67060140E50002576C /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/UKTestHandler.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -322,6 +321,7 @@
 		0867D691FE84028FC02AAC07 /* UnitKit */ = {
 			isa = PBXGroup;
 			children = (
+				60E360F81D941CCC00220DAC /* Default-568h@2x.png */,
 				6048463E18B6373A006E4EDC /* README.md */,
 				6048463C18B6373A006E4EDC /* INSTALL.Cocoa.md */,
 				6048463D18B6373A006E4EDC /* INSTALL.GNUstep.md */,
@@ -449,7 +449,6 @@
 				AE73F21F05F1573200CAFD4D /* UKTest.h */,
 				AE613E6705F181AE009B020F /* UKTestHandler.h */,
 				AE613E6805F181AE009B020F /* UKTestHandler.m */,
-				AEFFFA70060140EB0002576C /* UKTestHandler.strings */,
 				AE923D8905C3B9EC00549058 /* UKRunner.h */,
 				AE923D8A05C3B9EC00549058 /* UKRunner.m */,
 				32DBCF5E0370ADEE00C91783 /* Info.plist */,
@@ -705,7 +704,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0730;
 			};
 			buildConfigurationList = 600CE50C09F24490008BA30D /* Build configuration list for PBXProject "UnitKit" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -742,7 +741,6 @@
 				60A71B7718B507910038CE05 /* LICENSE in Resources */,
 				60A71B7218B5072E0038CE05 /* Icon-Pass.tiff in Resources */,
 				60A71B7318B5072E0038CE05 /* Icon-Fail.tiff in Resources */,
-				60A71B7418B5072E0038CE05 /* UKTestHandler.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -750,6 +748,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60E360F91D941CCC00220DAC /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -757,7 +756,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AEFFFA71060140EB0002576C /* UKTestHandler.strings in Resources */,
 				AEEB74D106B1BEFD00BE53E8 /* LICENSE in Resources */,
 				03BC00BE0DEE32AD009AFC82 /* Icon-Pass.tiff in Resources */,
 				03BC00BF0DEE32AD009AFC82 /* Icon-Fail.tiff in Resources */,
@@ -973,23 +971,13 @@
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		AEFFFA70060140EB0002576C /* UKTestHandler.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AEFFFA67060140E50002576C /* English */,
-			);
-			name = UKTestHandler.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
 		600CE4F509F24490008BA30D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = FrameworkSource/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.etoile-project.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = UnitKit;
 			};
 			name = Debug;
@@ -999,6 +987,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = FrameworkSource/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.etoile-project.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = UnitKit;
 			};
 			name = Release;
@@ -1022,6 +1011,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = TestSource/TestBundle/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.etoile-project.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = TestBundle;
 			};
 			name = Debug;
@@ -1031,6 +1021,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = TestSource/TestBundle/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.etoile-project.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = TestBundle;
 			};
 			name = Release;
@@ -1040,6 +1031,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = TestSource/TestFramework/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.etoile-project.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = TestFramework;
 			};
 			name = Debug;
@@ -1049,6 +1041,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = TestSource/TestFramework/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.etoile-project.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = TestFramework;
 			};
 			name = Release;
@@ -1058,6 +1051,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = TestSource/TestUnitKit/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.etoile-project.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = TestUnitKit;
 			};
 			name = Debug;
@@ -1067,6 +1061,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = TestSource/TestUnitKit/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.etoile-project.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = TestUnitKit;
 			};
 			name = Release;
@@ -1074,12 +1069,14 @@
 		600CE50D09F24490008BA30D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				STRIP_INSTALLED_PRODUCT = NO;
 				WARNING_CFLAGS = "-Wall";
@@ -1089,11 +1086,11 @@
 		600CE50E09F24490008BA30D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				SDKROOT = macosx;
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -1105,17 +1102,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = FrameworkSource/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-framework",
 					Foundation,
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.etoile-project.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = UnitKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1123,17 +1118,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = FrameworkSource/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-framework",
 					Foundation,
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.etoile-project.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = UnitKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -1141,12 +1134,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = iOSCompatibility/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				ONLY_ACTIVE_ARCH = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.etoile-project.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = TestUnitKit;
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1155,12 +1147,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = iOSCompatibility/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.etoile-project.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = TestUnitKit;
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
