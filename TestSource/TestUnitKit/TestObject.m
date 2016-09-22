@@ -37,7 +37,6 @@
 - (void)dealloc
 {
 	[NSException raise: @"Test" format: @"For exception in dealloc"];
-	[super dealloc];
 }
 
 @end

@@ -28,7 +28,6 @@
 {
 	TestClass *instance = [[TestClass alloc] init];
 	UKIntsEqual([instance testMethod], 42);
-	[instance release];
 }
 
 @end

@@ -37,14 +37,6 @@
  * together.
 */
 @interface UKTestHandler : NSObject
-{
-	@private
-	id delegate;
-	int testsPassed;
-	int testsFailed;
-	int exceptionsReported;
-	BOOL quiet;
-}
 
 
 /** @taskunit Initialization */
@@ -67,7 +59,7 @@
  *
  * For more details, see -setDelegate:.
  */
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, weak) id delegate;
 /**
  * Sets a delegate that can implement the same reporting methods than
  * UKTestHandler.
@@ -171,10 +163,10 @@
 - (void)testFalse: (BOOL)cond
            inFile: (const char *)filename
              line: (int)line;
-- (void)testNil: (void *)ref
+- (void)testNil: (id)ref
          inFile: (const char *)filename
            line: (int)line;
-- (void)testNotNil: (void *)ref
+- (void)testNotNil: (id)ref
             inFile: (const char *)filename
               line: (int)line;
 

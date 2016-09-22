@@ -52,7 +52,7 @@ static BOOL testedObjectInitialized = NO;
 
 @implementation UKRunnerTests
 
-- (instancetype)init
+- (id)init
 {
 	self = [super init];
     if (self == nil)
@@ -62,7 +62,7 @@ static BOOL testedObjectInitialized = NO;
 
 #if !(TARGET_OS_IPHONE)
 	NSString *mainTestBundlePath = [NSBundle bundleForClass: [self class]].bundlePath;
-	NSString *testBundlePath = [mainTestBundlePath.stringByDeletingLastPathComponent 
+	NSString *testBundlePath = [[mainTestBundlePath stringByDeletingLastPathComponent] 
 		stringByAppendingPathComponent: @"TestBundle.bundle"];
 
 	testBundle = [[NSBundle alloc] initWithPath: testBundlePath];
@@ -73,25 +73,13 @@ static BOOL testedObjectInitialized = NO;
 	return self;
 }
 
-- (void)dealloc
-{
-	[testBundle release];
-    [reportedException release];
-    [reportedTestClass release];
-    [reportedMethodName release];
-	[super dealloc];
-}
-
 - (void)reportException: (NSException *)exception
                 inClass: (Class)testClass
                    hint: (NSString *)hint
 {
-    [reportedException autorelease];
-    [reportedTestClass autorelease];
-    [reportedMethodName autorelease];
-    reportedException = [exception retain];
-    reportedTestClass = [testClass retain];
-    reportedMethodName = [hint retain];
+    reportedException = exception;
+    reportedTestClass = testClass;
+    reportedMethodName = hint;
 }
 
 - (void)testRunLoopAddition
@@ -117,7 +105,7 @@ static BOOL testedObjectInitialized = NO;
 
     UKStringsEqual(result, @"YES");
 
-    [thread.threadDictionary removeObjectForKey:@"UKLoopTriggerRan"];
+    [thread.threadDictionary removeObjectForKey: @"UKLoopTriggerRan"];
 }
 
 - (void)testRunLoopMode
@@ -158,52 +146,49 @@ static BOOL testedObjectInitialized = NO;
 - (void)testReportInitException
 {
 	UKRunner *runner = [[UKRunner alloc] init];
-	handler.delegate = self;
+	[handler setDelegate: self];
 
 	UKDoesNotRaiseException([runner runTests: @[@"testEmpty"]
                                   onInstance: YES
                                      ofClass: [TestObjectInit class]]);
 
-	UKStringsEqual(@"For exception in init", [reportedException reason]);
+	UKStringsEqual(@"For exception in init", reportedException.reason);
 	UKObjectsEqual([TestObjectInit class], reportedTestClass);
     UKStringsEqual(@"errExceptionOnInit", reportedMethodName);
 
-    [handler setDelegate: nil];
-    [runner release];
+    handler.delegate = nil;
 }
 
 - (void)testReportDeallocException
 {
 	UKRunner *runner = [[UKRunner alloc] init];
-	handler.delegate = self;
+	[handler setDelegate: self];
 
 	UKDoesNotRaiseException([runner runTests: @[@"testEmpty"]
                                   onInstance: YES
                                      ofClass: [TestObjectDealloc class]]);
 
-	UKStringsEqual(@"For exception in dealloc", [reportedException reason]);
+	UKStringsEqual(@"For exception in dealloc", reportedException.reason);
 	UKObjectsEqual([TestObjectDealloc class], reportedTestClass);
     UKStringsEqual(@"errExceptionOnRelease", reportedMethodName);
 
-    [handler setDelegate: nil];
-    [runner release];
+    handler.delegate = nil;
 }
 
 - (void)testReportTestMethodException
 {
 	UKRunner *runner = [[UKRunner alloc] init];
-	handler.delegate = self;
+	[handler setDelegate: self];
 
 	UKDoesNotRaiseException([runner runTests: @[@"testRaisesException"]
                                   onInstance: YES
                                      ofClass: [TestObjectTestMethod class]]);
 
-	UKStringsEqual(@"For exception in test method", [reportedException reason]);
+	UKStringsEqual(@"For exception in test method", reportedException.reason);
 	UKObjectsEqual([TestObjectTestMethod class], reportedTestClass);
     UKStringsEqual(@"testRaisesException", reportedMethodName);
 
-    [handler setDelegate: nil];
-    [runner release];
+    handler.delegate = nil;
 }
 
 /*

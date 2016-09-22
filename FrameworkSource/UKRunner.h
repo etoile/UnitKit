@@ -70,10 +70,6 @@
 @interface UKRunner : NSObject
 {
 	@private
-   	NSString *classRegex;
-	NSString *className;
-	NSString *methodRegex;
-	NSString *methodName;
 	int testClassesRun;
 	int testMethodsRun;
 }
@@ -114,6 +110,7 @@
  * Only run test methods with this name. If set, methodRegex is ignored.
  */
 @property (nonatomic, copy) NSString *methodName;
+
 
 /** @taskunit Tool Support */
 

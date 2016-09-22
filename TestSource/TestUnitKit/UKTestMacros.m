@@ -33,11 +33,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[super dealloc];
-}
-
 - (void)reportStatus: (BOOL)cond inFile: (char *)filename line: (int)line message: (NSString *)msg
 {
 	reportedStatus = cond;
@@ -72,7 +67,7 @@
 - (void)testUKPass
 {
 	UKPass();
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	NSAssert(reportedStatus, @"Failsafe check on UKPass");
 	UKTrue(reportedStatus);
 }
@@ -80,14 +75,14 @@
 - (void)testUKPassWithMessage
 {
 	UKPass();
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	NSAssert(reportedStatus, @"Failsafe check on UKPass");
 }
 
 - (void)testUKFail
 {
 	UKFail();
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	NSAssert(!reportedStatus, @"Failsafe check on UKFail");
 	UKFalse(reportedStatus);
 }
@@ -95,7 +90,7 @@
 - (void)testUKTrue_Simple
 {
 	UKTrue(YES);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	NSAssert(reportedStatus, @"Failsafe check on UKTrue");
 	UKTrue(reportedStatus);
 }
@@ -103,7 +98,7 @@
 - (void)testUKTrue_Simple_Negative
 {
 	UKTrue(NO);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	NSAssert(!reportedStatus, @"Failsafe check on UKTrue");
 	UKFalse(reportedStatus);
 }
@@ -111,77 +106,77 @@
 - (void)testUKTrue_Conditional_GreaterThan
 {
 	UKTrue(42 > 41);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
 - (void)testUKTrue_Conditional_GreaterThan_Negative
 {
 	UKTrue(41 > 42);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKFalse(reportedStatus);
 }
 
 - (void)testUKTrue_Conditional_LessThan
 {
 	UKTrue(41 < 42);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
 - (void)testUKTrue_Conditional_LessThan_Negative
 {
 	UKTrue(41 < 40);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKFalse(reportedStatus);
 }
 
 - (void)testUKTrue_Conditional_Equal
 {
 	UKTrue(42 == 42);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
 - (void)testUKTrue_Conditional_Equal_Negative
 {
 	UKTrue(42 == 41);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKFalse(reportedStatus);
 }
 
 - (void)testUKTrue_Conditional_NotEqual
 {
 	UKTrue(42 != 41);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
 - (void)testUKTrue_Conditional_NotEqual_Negative
 {
 	UKTrue(42 != 42);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKFalse(reportedStatus);
 }
 
 - (void)testUKTrue_Message
 {
 	UKTrue([@"foofart" hasPrefix: @"foo"]);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
 - (void)testUKTrue_Message_Negative
 {
 	UKTrue([@"foofart" hasPrefix: @"fart"]);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKFalse(reportedStatus);
 }
 
 - (void)testUKFalse
 {
 	UKFalse(NO);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	NSAssert(reportedStatus, @"Failsafe check on UKFalse");
 	UKTrue(reportedStatus);
 }
@@ -189,7 +184,7 @@
 - (void)testUKFalse_Negative
 {
 	UKFalse(YES);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	NSAssert(!reportedStatus, @"Failsafe check on UKFalse");
 	UKFalse(reportedStatus);
 }
@@ -197,28 +192,28 @@
 - (void)testUKFalse_Message
 {
 	UKTrue([@"foofart" hasPrefix: @"fart"]);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKFalse(reportedStatus);
 }
 
 - (void)testUKFalse_Message_Negative
 {
 	UKTrue([@"foofart" hasPrefix: @"foo"]);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
 - (void)testUKNil_withNil
 {
 	UKNil(nil);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
 - (void)testUKNil_withNull
 {
 	UKNil(NULL);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
@@ -226,7 +221,7 @@
 {
 	// since zero is zero *and* the value of the nil pointer...
 	UKNil(0);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
@@ -238,7 +233,7 @@
 - (void)testUKNil_NegativeWithObject
 {
 	UKNil(@"");
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKFalse(reportedStatus);
 }
 
@@ -250,84 +245,84 @@
 - (void)testUKNotNil
 {
 	UKNotNil(@"");
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
 - (void)testUKNotNil_NegativeWithNil
 {
 	UKNotNil(nil);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKFalse(reportedStatus);
 }
 
 - (void)testUKNotNil_NegativeWithNull
 {
 	UKNotNil(NULL);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKFalse(reportedStatus);
 }
 
 - (void)testUKNotNil_NegativeWith0
 {
 	UKNotNil(0);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKFalse(reportedStatus);
 }
 
 - (void)testUKIntsEqual
 {
 	UKIntsEqual(42, 42);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
 - (void)testUKIntsEqual_Negative
 {
 	UKIntsEqual(42, 41);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKFalse(reportedStatus);
 }
 
 - (void)testUKFloatsEqual1
 {
 	UKFloatsEqual(42.100, 42.100, 0.01);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
 - (void)testUKFloatsEqual2
 {
 	UKFloatsEqual(42.100, 42.200, 0.2);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
 - (void)testUKFloatsEqual3
 {
 	UKFloatsEqual(1.0, 1.0, 0.0);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
 - (void)testUKFloatsEqual4
 {
 	UKFloatsEqual(1.0, 1.0, 0.01);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
 - (void)testUKFloatsEqual_Negative1
 {
 	UKFloatsEqual(42.100, 43.100, 0.01);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKFalse(reportedStatus);
 }
 
 - (void)testUKFloatsEqual_Negative2
 {
 	UKFloatsEqual(42.100, 42.200, 0.08);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKFalse(reportedStatus);
 }
 
@@ -335,21 +330,21 @@
 - (void)testUKFloatsNotEqual
 {
 	UKFloatsNotEqual(42.100, 43.100, 0.01);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
 - (void)testUKFloatsEqual_Negative
 {
 	UKFloatsNotEqual(42.1000, 42.1000, 0.01);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKFalse(reportedStatus);
 }
 
 - (void)testUKObjectsEqual1
 {
 	UKObjectsEqual(self, self);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
@@ -357,21 +352,21 @@
 {
 	NSString *string = @"";
 	UKObjectsEqual(string, [NSString stringWithString: string]);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
 - (void)testUKObjectsEqual_Negative
 {
 	UKObjectsEqual(@"", @"123");
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKFalse(reportedStatus);
 }
 
 - (void)testUKStringsEqual1
 {
 	UKStringsEqual(@"abc", @"abc");
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
@@ -379,7 +374,7 @@
 {
 	NSString *string = @"abc";
 	UKStringsEqual(string, [NSString stringWithString: string]);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
@@ -388,28 +383,28 @@
 	NSString *string = [NSString stringWithCString: "abc"
                                           encoding: NSUTF8StringEncoding];
 	UKStringsEqual(@"abc", string);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
 - (void)testUKStringsEqual_Negative
 {
 	UKStringsEqual(@"abc", @"bea");
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKFalse(reportedStatus);
 }
 
 - (void)testUKStringsNotEqual
 {
 	UKStringsNotEqual(@"abc", @"bea");
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
 - (void)testUKStringsNotEqual_Negative1
 {
 	UKStringsNotEqual(@"abc", @"abc");
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKFalse(reportedStatus);
 }
 
@@ -417,7 +412,7 @@
 {
 	NSString *string = @"abc";
 	UKStringsNotEqual(string, [NSString stringWithString: string]);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKFalse(reportedStatus);
 }
 
@@ -426,7 +421,7 @@
 	NSString *string = [NSString stringWithCString: "abc"
                                           encoding: NSUTF8StringEncoding];
 	UKStringsNotEqual(@"abc", string);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKFalse(reportedStatus);
 }
 
@@ -434,28 +429,28 @@
 - (void)testUKStringContains
 {
 	UKStringContains(@"Now is the time", @"the time");
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
 - (void)testUKStringContains_Negative
 {
 	UKStringContains(@"asdf", @"zzzzz");
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKFalse(reportedStatus);
 }
 
 - (void)testUKStringDoesNotContain
 {
 	UKStringDoesNotContain(@"asdf", @"zzzzz");
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
 - (void)testUKStringDoesNotContain_Negative
 {
 	UKStringDoesNotContain(@"Now is the time", @"the time");
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKFalse(reportedStatus);
 }
 
@@ -472,28 +467,28 @@
 - (void)testUKRaisesException
 {
 	UKRaisesException([self raiseException: @"Hi"]);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
 - (void)testUKRaisesException_Negative
 {
 	UKRaisesException([self doNotRaiseException]);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKFalse(reportedStatus);
 }
 
 - (void)testUKDoesNotRaisesException
 {
 	UKDoesNotRaiseException([self doNotRaiseException]);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
 - (void)testUKDoesNotRaisesException_Negative
 {
 	UKDoesNotRaiseException([self raiseException: @"Hi"]);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKFalse(reportedStatus);
 }
 
@@ -504,7 +499,7 @@
                                            userInfo: nil];
 
 	UKRaisesExceptionNamed([self raiseException: e], @"Test");
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
@@ -515,28 +510,28 @@
                                            userInfo: nil];
 
 	UKRaisesExceptionNamed([self raiseException: e], @"Wrong");
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKFalse(reportedStatus);
 }
 
 - (void)testUKRaisesExceptionNamed_WrongClass
 {
 	UKRaisesExceptionNamed([self raiseException: @"Not an NSException"], @"Wrong");
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKFalse(reportedStatus);
 }
 
 - (void)testUKRaisesExceptionClass
 {
 	UKRaisesExceptionClass([self raiseException: @"aSTring"], NSString);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKTrue(reportedStatus);
 }
 
 - (void)testUKRaisesClass_Wrong
 {
 	UKRaisesExceptionClass([self raiseException: @"aSTring"], NSException);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKFalse(reportedStatus);
 }
 

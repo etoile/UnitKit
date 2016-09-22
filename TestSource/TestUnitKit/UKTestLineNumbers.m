@@ -34,11 +34,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[super dealloc];
-}
-
 - (void)reportStatus: (BOOL)cond
               inFile: (char *)filename
                 line: (int)line
@@ -50,182 +45,182 @@
 - (void)testUKPass
 {
 	UKPass();
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKIntsEqual((__LINE__ - 2), reportedLine);
 }
 
 - (void)testUKFail
 {
 	UKFail();
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKIntsEqual((__LINE__ - 2), reportedLine);
 }
 
 - (void)testUKTrue
 {
 	UKTrue(YES);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKIntsEqual((__LINE__ - 2), reportedLine);
 }
 
 - (void)testUKTrue_Negative
 {
 	UKTrue(NO);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKIntsEqual((__LINE__ - 2), reportedLine);
 }
 
 - (void)testUKFalse
 {
 	UKFalse(NO);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKIntsEqual((__LINE__ - 2), reportedLine);
 }
 
 - (void)testUKFalse_Negative
 {
 	UKFalse(YES);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKIntsEqual((__LINE__ - 2), reportedLine);
 }
 
 - (void)testUKNil
 {
 	UKNil(nil);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKIntsEqual((__LINE__ - 2), reportedLine);
 }
 
 - (void)testUKNil_Negative
 {
 	UKNil(@"");
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKIntsEqual((__LINE__ - 2), reportedLine);
 }
 
 - (void)testUKNotNil
 {
 	UKNotNil(@"");
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKIntsEqual((__LINE__ - 2), reportedLine);
 }
 
 - (void)testUKNotNil_Negative
 {
 	UKNotNil(nil);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKIntsEqual((__LINE__ - 2), reportedLine);
 }
 
 - (void)testUKIntsEqual
 {
 	UKIntsEqual(1, 1);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKIntsEqual((__LINE__ - 2), reportedLine);
 }
 
 - (void)testUKIntsEqual_Negative
 {
 	UKIntsEqual(1, 2);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKIntsEqual((__LINE__ - 2), reportedLine);
 }
 
 - (void)testUKFloatsEqual
 {
 	UKFloatsEqual(1.0, 1.0, 0.1);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKIntsEqual((__LINE__ - 2), reportedLine);
 }
 
 - (void)testUKFloatsEqual_Negative
 {
 	UKFloatsEqual(1.0, 2.0, 0.1);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKIntsEqual((__LINE__ - 2), reportedLine);
 }
 
 - (void)testUKFloatsNotEqual
 {
 	UKFloatsNotEqual(1.0, 2.0, 0.1);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKIntsEqual((__LINE__ - 2), reportedLine);
 }
 
 - (void)testUKFloatsNotEqual_Negative
 {
 	UKFloatsNotEqual(1.0, 1.0, 0.1);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKIntsEqual((__LINE__ - 2), reportedLine);
 }
 
 - (void)testUKObjectsEqual
 {
 	UKObjectsEqual(self, self);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKIntsEqual((__LINE__ - 2), reportedLine);
 }
 
 - (void)testUKObjectsEqual_Negative
 {
 	UKObjectsEqual(self, @"asdf");
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKIntsEqual((__LINE__ - 2), reportedLine);
 }
 
 - (void)testUKObjectsSame
 {
 	UKObjectsSame(self, self);
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKIntsEqual((__LINE__ - 2), reportedLine);
 }
 
 - (void)testUKObjectsSame_Negative
 {
 	UKObjectsSame(self, @"asdf");
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKIntsEqual((__LINE__ - 2), reportedLine);
 }
 
 - (void)testUKStringsEqual
 {
 	UKStringsEqual(@"a", @"a");
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKIntsEqual((__LINE__ - 2), reportedLine);
 }
 
 - (void)testUKStringsEqual_Negative
 {
 	UKStringsEqual(@"a", @"b");
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKIntsEqual((__LINE__ - 2), reportedLine);
 }
 
 - (void)testUKStringContains
 {
 	UKStringContains(@"Now is the time", @"the time");
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKIntsEqual((__LINE__ - 2), reportedLine);
 }
 
 - (void)testUKStringContains_Negative
 {
 	UKStringContains(@"asdf", @"zzzzz");
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKIntsEqual((__LINE__ - 2), reportedLine);
 }
 
 - (void)testUKStringDoesNotContain
 {
 	UKStringDoesNotContain(@"asdf", @"zzzzz");
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKIntsEqual((__LINE__ - 2), reportedLine);
 }
 
 - (void)testUKStringDoesNotContain_Negative
 {
 	UKStringDoesNotContain(@"Now is the time", @"the time");
-	[handler setDelegate: nil];
+	handler.delegate = nil;
 	UKIntsEqual((__LINE__ - 2), reportedLine);
 }
 

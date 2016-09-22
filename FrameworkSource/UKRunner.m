@@ -41,6 +41,8 @@
 	} \
 } while (0);
 
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+
 
 @implementation UKRunner
 
@@ -85,72 +87,16 @@
 	if (self == nil)
     	return nil;
 
-	self.classRegex = [self stringFromArgumentDomainForKey: @"c"];
-	if (nil == self.classRegex)
+	_classRegex = [self stringFromArgumentDomainForKey: @"c"];
+	if (nil == _classRegex)
 	{
-		self.classRegex = [self stringFromArgumentDomainForKey: @"classRegex"];
+		_classRegex = [self stringFromArgumentDomainForKey: @"classRegex"];
 	}
-	self.className = [self stringFromArgumentDomainForKey: @"className"];
-	self.methodRegex = [self stringFromArgumentDomainForKey: @"methodRegex"];
-	self.methodName = [self stringFromArgumentDomainForKey: @"methodName"];
+	_className = [self stringFromArgumentDomainForKey: @"className"];
+	_methodRegex = [self stringFromArgumentDomainForKey: @"methodRegex"];
+	_methodName = [self stringFromArgumentDomainForKey: @"methodName"];
 
     return self;
-}
-
-
-- (void)dealloc
-{
-	[classRegex release];
-	[className release];
-	[methodRegex release];
-	[methodName release];
-    [super dealloc];
-}
-
-#pragma mark - Settings
-
-- (NSString *)classRegex
-{
-	return classRegex;
-}
-
-- (void)setClassRegex: (NSString *)aRegex
-{
-	[classRegex autorelease];
-    classRegex = [aRegex copy];
-}
-
-- (NSString *)className
-{
-	return className;
-}
-
-- (void)setClassName: (NSString *)aName
-{
-	[className autorelease];
-	className = [aName copy];
-}
-
-- (NSString *)methodRegex
-{
-	return methodRegex;
-}
-
-- (void)setMethodRegex: (NSString *)aRegex
-{
-	[methodRegex autorelease];
-	methodRegex = [aRegex copy];
-}
-
-- (NSString *)methodName
-{
-	return methodName;
-}
-
-- (void)setMethodName: (NSString *)aName
-{
-	[methodName autorelease];
-	methodName = [aName copy];
 }
 
 #pragma mark - Loading Test Bundles
@@ -220,26 +166,23 @@
 + (int)runTests
 {
 	NSString *version = [NSBundle bundleForClass: self].infoDictionary[@"CFBundleShortVersionString"];
+	int result = 0;
 
 	NSLog(@"UnitKit version %@ (Etoile)", version);
 
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	UKRunner *runner = [[UKRunner alloc] init];
+	@autoreleasepool {
+		UKRunner *runner = [[UKRunner alloc] init];
+		NSString *cwd = [NSFileManager defaultManager].currentDirectoryPath;
 
-	NSString *cwd = [NSFileManager defaultManager].currentDirectoryPath;
+		for (NSString *bundlePath in [runner bundlePathsFromArgumentsAndCurrentDirectory: cwd])
+		{
+			[runner runTestsInBundleAtPath: bundlePath
+			              currentDirectory: cwd];
+		}
 
-	for (NSString *bundlePath in [runner bundlePathsFromArgumentsAndCurrentDirectory: cwd])
-	{
-		[runner runTestsInBundleAtPath: bundlePath
-		              currentDirectory: cwd];
+		result = [runner reportTestResults];
 	}
-
-	int result = [runner reportTestResults];
-
-	[runner release];
-	[pool release];
-
-	return result;
+    return result;
 }
 
 /**
@@ -289,19 +232,19 @@
 			
 			if ([arg isEqualToString: @"-c"] || [arg isEqualToString: @"-classRegex"])
 			{
-				self.classRegex = param;
+				_classRegex = param;
 			}
 			else if ([arg isEqualToString: @"-className"])
 			{
-				self.className = param;
+				_className = param;
 			}
 			else if ([arg isEqualToString: @"-methodRegex"])
 			{
-				self.methodRegex = param;
+				_methodRegex = param;
 			}
 			else if ([arg isEqualToString: @"-methodName"])
 			{
-				self.methodName = param;
+				_methodName = param;
 			}
 		}
 		else
@@ -325,14 +268,14 @@
 
 	NSLog(@"Looking for bundle at path: %@", bundlePath);
 
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	NSBundle *testBundle = [self loadBundleAtPath: bundlePath];
+	@autoreleasepool {
+		NSBundle *testBundle = [self loadBundleAtPath: bundlePath];
 
-	if (testBundle != nil)
-	{
-		[self runTestsInBundle: testBundle];
+		if (testBundle != nil)
+		{
+			[self runTestsInBundle: testBundle];
+		}
 	}
-	[pool release];
 }
 
 #pragma mark - Running Test Method
@@ -374,8 +317,6 @@
 	                                                   userInfo: testParams
 	                                                    repeats: NO];
 
-	[runTimer retain];
-
 	while (runTimer.valid)
 	{
 		// NOTE: nil, [NSDate date], time intervals such as 0, 0.0000001 or
@@ -391,44 +332,6 @@
 #endif
 		[runLoop runUntilDate: [NSDate dateWithTimeIntervalSinceNow: interval]];
 	}
-
-	[runTimer release];
-}
-
-#pragma mark - Creating Test Object
-
-- (id)newTestObjectOfClass: (Class)testClass
-{
-	id object = [testClass alloc];
-
-	@try
-	{
-		object = [object init];
-	}
-	@catch (NSException *exception)
-	{
-		[[UKTestHandler handler] reportException: exception
-		                                 inClass: testClass
-			                                hint: @"errExceptionOnInit"];
-		return nil;
-	}
-
-	return object;
-}
-
-- (void)releaseTestObject: (id)object
-{
-	@try
-	{
-		[object release];
-		object = nil;
-	}
-	@catch (NSException *exception)
-	{
-		[[UKTestHandler handler] reportException: exception
-		                                 inClass: [object class]
-			                                hint: @"errExceptionOnRelease"];
-	}
 }
 
 #pragma mark - Running Tests
@@ -441,59 +344,10 @@
 
         @try
         {
-            @autoreleasepool
-            {
-                id object = nil;
-                
-                // Create the object to test
-                
-                if (instance)
-                {
-                    object = [self newTestObjectOfClass: testClass];
-                    
-                    // N.B.: If -init throws an exception or returns nil, we don't
-                    // attempt to run any more methods on this class
-                    if (object == nil)
-                        return;
-                }
-                else
-                {
-                    object = testClass;
-                }
-                
-                // Run the test method
-                
-                @try
-                {
-                    SEL testSel = NSSelectorFromString(testMethodName);
-                    
-                    /* This pool makes easier to separate autorelease issues between:
-                     - test method
-                     - test object configuration due to -init and -dealloc
-                     
-                     For testing CoreObject, this also ensures all autoreleased
-                     objects in relation to a db are deallocated before closing
-                     the db connection in -dealloc (see TestCommon.h in CoreObject
-                     for details) */
-                    NSAutoreleasePool *localPool = [NSAutoreleasePool new];
-                    
-                    [self runTest: testSel onObject: object class: testClass];
-                    
-                    [localPool release];
-                }
-                @catch (NSException *exception)
-                {
-                    [[UKTestHandler handler] reportException: exception
-                                                     inClass: testClass
-                                                        hint: testMethodName];
-                }
-                
-                // Release the object
-                
-                if (instance)
-                {
-                    [self releaseTestObject: object];
-                }
+        	@autoreleasepool {
+        		[self runTestNamed: testMethodName
+            	        onInstance: instance
+        		           ofClass: testClass];
             }
         }
         @catch (NSException *exception)
@@ -501,6 +355,77 @@
             [[UKTestHandler handler] reportException: exception
                                              inClass: testClass
                                                 hint: nil];
+        }
+    }
+}
+
+- (void)runTestNamed: (NSString *)testMethodName onInstance: (BOOL)instance ofClass: (Class)testClass
+{
+    id object = nil;
+    
+    // Create the object to test
+    
+    if (instance)
+    {
+        @try
+        {
+            object = [[testClass alloc] init];
+        }
+        @catch (NSException *exception)
+        {
+            [[UKTestHandler handler] reportException: exception
+                                             inClass: testClass
+                                                hint: @"errExceptionOnInit"];
+        }
+        
+        // N.B.: If -init throws an exception or returns nil, we don't
+        // attempt to run any more methods on this class
+        if (object == nil)
+            return;
+    }
+    else
+    {
+        object = testClass;
+    }
+    
+    // Run the test method
+    
+    @try
+    {
+        SEL testSel = NSSelectorFromString(testMethodName);
+        
+        /* This pool makes easier to separate autorelease issues between:
+         - test method
+         - test object configuration due to -init and -dealloc
+         
+         For testing CoreObject, this also ensures all autoreleased
+         objects in relation to a db are deallocated before closing
+         the db connection in -dealloc (see TestCommon.h in CoreObject
+         for details) */
+        @autoreleasepool {
+            [self runTest: testSel onObject: object class: testClass];
+        }
+    }
+    @catch (NSException *exception)
+    {
+        [[UKTestHandler handler] reportException: exception
+                                         inClass: testClass
+                                            hint: testMethodName];
+    }
+    
+    // Release the object
+    
+    if (instance)
+    {
+        @try
+        {
+            object = nil;
+        }
+        @catch (NSException *exception)
+        {
+            [[UKTestHandler handler] reportException: exception
+                                             inClass: [object class]
+                                                hint: @"errExceptionOnRelease"];
         }
     }
 }
@@ -527,11 +452,11 @@
 
 - (NSArray *)filterTestClassNames: (NSArray *)testClassNames
 {
-	if (nil != self.className)
+	if (nil != _className)
 	{
-		if ([testClassNames containsObject: self.className])
+		if ([testClassNames containsObject: _className])
 		{
-			return @[self.className];
+			return @[_className];
 		}
 		return [NSArray array];
 	}
@@ -540,7 +465,7 @@
 	
 	for (NSString *testClassName in testClassNames)
 	{
-		if (classRegex == nil || [testClassName rangeOfString: self.classRegex
+		if (_classRegex == nil || [testClassName rangeOfString: _classRegex
 		                                              options: NSRegularExpressionSearch].location != NSNotFound)
 		{
 			[filteredClassNames addObject: testClassName];
@@ -552,11 +477,11 @@
 
 - (NSArray *)filterTestMethodNames: (NSArray *)testMethodNames
 {
-	if (nil != self.methodName)
+	if (nil != _methodName)
 	{
-		if ([testMethodNames containsObject: self.methodName])
+		if ([testMethodNames containsObject: _methodName])
 		{
-			return @[self.methodName];
+			return @[_methodName];
 		}
 		return [NSArray array];
 	}
@@ -565,7 +490,7 @@
 	
 	for (NSString *testMethodName in testMethodNames)
 	{
-		if (self.methodRegex == nil || [testMethodName rangeOfString: self.methodRegex
+		if (_methodRegex == nil || [testMethodName rangeOfString: self.methodRegex
 															   options: NSRegularExpressionSearch].location != NSNotFound)
 		{
 			[filteredMethodNames addObject: testMethodName];
@@ -669,7 +594,7 @@ NSArray *UKTestClassNamesFromBundle(NSBundle *bundle)
 
 	if (numClasses > 0)
 	{
-		Class *classes = malloc(sizeof(Class) * numClasses);
+		Class *classes = (Class *)malloc(sizeof(Class) * numClasses);
 
 		objc_getClassList(classes, numClasses);
 

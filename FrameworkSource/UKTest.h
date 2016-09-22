@@ -52,11 +52,11 @@
 /**
  * Tests that <code>ref == nil</code>.
  */
-#define UKNil(ref) [[UKTestHandler handler] testNil: (void *)(ref) inFile:__FILE__ line:__LINE__] 
+#define UKNil(ref) [[UKTestHandler handler] testNil:(ref) inFile:__FILE__ line:__LINE__]
 /**
  * Tests that <code>ref != nil</code>.
  */
-#define UKNotNil(ref) [[UKTestHandler handler] testNotNil: (void *)(ref) inFile:__FILE__ line:__LINE__]
+#define UKNotNil(ref) [[UKTestHandler handler] testNotNil:(ref) inFile:__FILE__ line:__LINE__]
 /**
  * Tests that two primitive integers are equal.
  *

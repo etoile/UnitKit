@@ -84,50 +84,29 @@
 
 #pragma mark - Controlling Test Result Reporting
 
-- (id)delegate
-{
-	return delegate;
-}
-
-- (void)setDelegate: (id)aDelegate
-{
-	[delegate autorelease];
-	delegate = [aDelegate retain];
-}
-
-- (BOOL)isQuiet
-{
-	return quiet;
-}
-
-- (void)setQuiet: (BOOL)isQuiet
-{
-	quiet = isQuiet;
-}
-
 - (void)reportStatus: (BOOL)cond
               inFile: (const char *)filename
                 line: (int)line
              message: (NSString *)msg
 {
-	if (delegate != nil
-	  && [delegate respondsToSelector: @selector(reportStatus:inFile:line:message:)])
+	if (_delegate != nil
+	  && [_delegate respondsToSelector: @selector(reportStatus:inFile:line:message:)])
 	{
-		[delegate reportStatus: cond inFile: filename line: line message: msg];
+		[_delegate reportStatus: cond inFile: filename line: line message: msg];
 		return;
 	}
 	else if (cond)
 	{
-		testsPassed++;
+		_testsPassed++;
 
-		if (!quiet)
+		if (!_quiet)
 		{
 			NSLog(@"%s:%i %s\n", filename, line, msg.UTF8String);
 		}
 	}
 	else
 	{
-		testsFailed++;
+		_testsFailed++;
 
 		NSLog(@"%s:%i: warning: %s\n", filename, line, msg.UTF8String);
 	}
@@ -137,14 +116,14 @@
                 inClass: (Class)testClass
                    hint: (NSString *)hint
 {
-	if (delegate != nil
-	  && [delegate respondsToSelector: @selector(reportException:inClass:hint:)])
+	if (_delegate != nil
+	  && [_delegate respondsToSelector: @selector(reportException:inClass:hint:)])
 	{
-		[delegate reportException: exception inClass: testClass hint: hint];
+		[_delegate reportException: exception inClass: testClass hint: hint];
 	}
 	else
 	{
-		exceptionsReported++;
+		_exceptionsReported++;
 
 		NSString *excstring = [[self class] displayStringForException: exception];
 		NSString *msg = nil;
@@ -169,31 +148,14 @@
 
 - (void)reportWarning: (NSString *)msg
 {
-	if (delegate != nil && [delegate respondsToSelector: @selector(reportWarning:)])
+	if (_delegate != nil && [_delegate respondsToSelector: @selector(reportWarning:)])
 	{
-		[delegate reportWarning: msg];
+		[_delegate reportWarning: msg];
 	}
 	else
 	{
 		NSLog(@":: warning: %s\n", msg.UTF8String);
 	}
-}
-
-#pragma mark - Test Results
-
-- (int)testsPassed
-{
-	return testsPassed;
-}
-
-- (int)testsFailed
-{
-	return testsFailed;
-}
-
-- (int)exceptionsReported
-{
-	return exceptionsReported;
 }
 
 #pragma mark - Basic Test Assertions
@@ -252,7 +214,7 @@
 	}
 }
 
-- (void)testNil: (void *)ref
+- (void)testNil: (id)ref
          inFile: (const char *)filename
            line: (int)line
 {
@@ -265,7 +227,6 @@
 	else
 	{
 		NSString *msg = [UKTestHandler localizedString: @"msgUKNil.fail"];
-		// FIXME: We are *so* assuming that this pointer is an object...
 		NSString *s = [UKTestHandler displayStringForObject: ref];
 		msg = [NSString stringWithFormat: msg, s];
 
@@ -273,14 +234,13 @@
 	}
 }
 
-- (void)testNotNil: (void *)ref
+- (void)testNotNil: (id)ref
             inFile: (const char *)filename
               line: (int)line
 {
 	if (ref != nil)
 	{
 		NSString *msg = [UKTestHandler localizedString: @"msgUKNotNil.pass"];
-		// FIXME: We are *so* assuming that this pointer is an object...
 		NSString *s = [UKTestHandler displayStringForObject: ref];
 		msg = [NSString stringWithFormat: msg, s];
 

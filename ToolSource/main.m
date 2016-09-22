@@ -25,10 +25,8 @@
 int main (int argc, const char *argv[])
 {
 	int retval;
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-
-	retval = [UKRunner runTests];
-
-	[pool release];
-	return retval;
+	@autoreleasepool {
+		retval = [UKRunner runTests];
+	}
+    return retval;
 }
