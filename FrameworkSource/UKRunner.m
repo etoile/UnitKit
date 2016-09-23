@@ -304,7 +304,7 @@
 	{
 		[[UKTestHandler handler] reportException: exception
 		                                 inClass: testClass
-						    hint: testMethodName];
+		                                    hint: testMethodName];
 	}
 }
 
@@ -502,7 +502,7 @@
 	for (NSString *testMethodName in testMethodNames)
 	{
 		if (_methodRegex == nil || [testMethodName rangeOfString: self.methodRegex
-															   options: NSRegularExpressionSearch].location != NSNotFound)
+		                                                 options: NSRegularExpressionSearch].location != NSNotFound)
 		{
 			[filteredMethodNames addObject: testMethodName];
 		}
