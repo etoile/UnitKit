@@ -55,15 +55,15 @@ static BOOL testedObjectInitialized = NO;
 - (id)init
 {
 	self = [super init];
-    if (self == nil)
-    	return nil;
+	if (self == nil)
+		return nil;
 
 	handler = [UKTestHandler handler];
 
 #if !(TARGET_OS_IPHONE)
 	NSString *mainTestBundlePath = [NSBundle bundleForClass: [self class]].bundlePath;
-	NSString *testBundlePath = [[mainTestBundlePath stringByDeletingLastPathComponent] 
-		stringByAppendingPathComponent: @"TestBundle.bundle"];
+	NSString *testBundlePath = [[mainTestBundlePath stringByDeletingLastPathComponent]
+	  stringByAppendingPathComponent: @"TestBundle.bundle"];
 
 	testBundle = [[NSBundle alloc] initWithPath: testBundlePath];
 	NSAssert1(testBundle != nil, @"Found not test bundle at %@", testBundlePath);
@@ -77,9 +77,9 @@ static BOOL testedObjectInitialized = NO;
                 inClass: (Class)testClass
                    hint: (NSString *)hint
 {
-    reportedException = exception;
-    reportedTestClass = testClass;
-    reportedMethodName = hint;
+	reportedException = exception;
+	reportedTestClass = testClass;
+	reportedMethodName = hint;
 }
 
 - (void)testRunLoopAddition
@@ -100,47 +100,49 @@ static BOOL testedObjectInitialized = NO;
 
 - (void)testRunLoopAdditionExecuted
 {
-    NSThread *thread = [NSThread currentThread];
-    NSString *result = thread.threadDictionary[@"UKLoopTriggerRan"];
+	NSThread *thread = [NSThread currentThread];
+	NSString *result = thread.threadDictionary[@"UKLoopTriggerRan"];
 
-    UKStringsEqual(result, @"YES");
+	UKStringsEqual(result, @"YES");
 
-    [thread.threadDictionary removeObjectForKey: @"UKLoopTriggerRan"];
+	[thread.threadDictionary removeObjectForKey: @"UKLoopTriggerRan"];
 }
 
 - (void)testRunLoopMode
 {
-    NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
-    UKStringsEqual([runLoop currentMode], NSDefaultRunLoopMode);
-    
+	NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
+	UKStringsEqual([runLoop currentMode], NSDefaultRunLoopMode);
+
 }
 
 #if !(TARGET_OS_IPHONE)
+
 - (void)testClassesFromBundle
 {
-    NSArray *testClasses = UKTestClassNamesFromBundle(testBundle);
+	NSArray *testClasses = UKTestClassNamesFromBundle(testBundle);
 
-    UKIntsEqual(2, [testClasses count]);
-    UKTrue([testClasses containsObject: @"TestTwo"]);
-    UKTrue([testClasses containsObject: @"TestThree"]);
+	UKIntsEqual(2, [testClasses count]);
+	UKTrue([testClasses containsObject: @"TestTwo"]);
+	UKTrue([testClasses containsObject: @"TestThree"]);
 
-    UKFalse(randomObjectInitialized);
+	UKFalse(randomObjectInitialized);
 #ifdef GNUSTEP
-    UKFalse(testedObjectInitialized);
+	UKFalse(testedObjectInitialized);
 #else
 	UKTrue(testedObjectInitialized);
 #endif
 }
+
 #endif
 
 - (void)testMethodNamesFromClass
 {
-    NSArray *testMethods = UKTestMethodNamesFromClass(NSClassFromString(@"TestTwo"));
+	NSArray *testMethods = UKTestMethodNamesFromClass(NSClassFromString(@"TestTwo"));
 
-    UKIntsEqual(3, [testMethods count]);
-    UKTrue([testMethods containsObject: @"testOne"]);
-    UKTrue([testMethods containsObject: @"testTwo"]);
-    UKTrue([testMethods containsObject: @"testThree"]);
+	UKIntsEqual(3, [testMethods count]);
+	UKTrue([testMethods containsObject: @"testOne"]);
+	UKTrue([testMethods containsObject: @"testTwo"]);
+	UKTrue([testMethods containsObject: @"testThree"]);
 }
 
 - (void)testReportInitException
@@ -149,14 +151,14 @@ static BOOL testedObjectInitialized = NO;
 	[handler setDelegate: self];
 
 	UKDoesNotRaiseException([runner runTests: @[@"testEmpty"]
-                                  onInstance: YES
-                                     ofClass: [TestObjectInit class]]);
+	                              onInstance: YES
+	                                 ofClass: [TestObjectInit class]]);
 
 	UKStringsEqual(@"For exception in init", reportedException.reason);
 	UKObjectsEqual([TestObjectInit class], reportedTestClass);
-    UKStringsEqual(@"errExceptionOnInit", reportedMethodName);
+	UKStringsEqual(@"errExceptionOnInit", reportedMethodName);
 
-    handler.delegate = nil;
+	handler.delegate = nil;
 }
 
 - (void)testReportDeallocException
@@ -165,14 +167,14 @@ static BOOL testedObjectInitialized = NO;
 	[handler setDelegate: self];
 
 	UKDoesNotRaiseException([runner runTests: @[@"testEmpty"]
-                                  onInstance: YES
-                                     ofClass: [TestObjectDealloc class]]);
+	                              onInstance: YES
+	                                 ofClass: [TestObjectDealloc class]]);
 
 	UKStringsEqual(@"For exception in dealloc", reportedException.reason);
 	UKObjectsEqual([TestObjectDealloc class], reportedTestClass);
-    UKStringsEqual(@"errExceptionOnRelease", reportedMethodName);
+	UKStringsEqual(@"errExceptionOnRelease", reportedMethodName);
 
-    handler.delegate = nil;
+	handler.delegate = nil;
 }
 
 - (void)testReportTestMethodException
@@ -181,14 +183,14 @@ static BOOL testedObjectInitialized = NO;
 	[handler setDelegate: self];
 
 	UKDoesNotRaiseException([runner runTests: @[@"testRaisesException"]
-                                  onInstance: YES
-                                     ofClass: [TestObjectTestMethod class]]);
+	                              onInstance: YES
+	                                 ofClass: [TestObjectTestMethod class]]);
 
 	UKStringsEqual(@"For exception in test method", reportedException.reason);
 	UKObjectsEqual([TestObjectTestMethod class], reportedTestClass);
-    UKStringsEqual(@"testRaisesException", reportedMethodName);
+	UKStringsEqual(@"testRaisesException", reportedMethodName);
 
-    handler.delegate = nil;
+	handler.delegate = nil;
 }
 
 /*

@@ -231,6 +231,7 @@
  * See also +willRunTestSuite.
  */
 + (void)didRunTestSuite;
+
 @end
 
 /**

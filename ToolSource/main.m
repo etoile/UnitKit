@@ -22,11 +22,12 @@
 #import <Foundation/Foundation.h>
 #import <UnitKit/UKRunner.h>
 
-int main (int argc, const char *argv[])
+int main(int argc, const char *argv[])
 {
 	int retval;
-	@autoreleasepool {
+	@autoreleasepool
+	{
 		retval = [UKRunner runTests];
 	}
-    return retval;
+	return retval;
 }

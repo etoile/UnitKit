@@ -26,8 +26,8 @@
 - (instancetype)init
 {
 	self = [super init];
-    if (self == nil)
-    	return nil;
+	if (self == nil)
+		return nil;
 
 	handler = [UKTestHandler handler];
 	handler.delegate = self;

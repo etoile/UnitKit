@@ -25,8 +25,8 @@
 - (instancetype)init
 {
 	self = [super init];
-    if (self == nil)
-    	return nil;
+	if (self == nil)
+		return nil;
 
 	handler = [UKTestHandler handler];
 	handler.delegate = self;
@@ -381,7 +381,7 @@
 - (void)testUKStringsEqual3
 {
 	NSString *string = [NSString stringWithCString: "abc"
-                                          encoding: NSUTF8StringEncoding];
+	                                      encoding: NSUTF8StringEncoding];
 	UKStringsEqual(@"abc", string);
 	handler.delegate = nil;
 	UKTrue(reportedStatus);
@@ -419,7 +419,7 @@
 - (void)testUKStringsNotEqual_Negative3
 {
 	NSString *string = [NSString stringWithCString: "abc"
-                                          encoding: NSUTF8StringEncoding];
+	                                      encoding: NSUTF8StringEncoding];
 	UKStringsNotEqual(@"abc", string);
 	handler.delegate = nil;
 	UKFalse(reportedStatus);
@@ -495,8 +495,8 @@
 - (void)testUKRaisesExceptionNamed
 {
 	NSException *e = [NSException exceptionWithName: @"Test"
-                                             reason: @"For testing"
-                                           userInfo: nil];
+	                                         reason: @"For testing"
+	                                       userInfo: nil];
 
 	UKRaisesExceptionNamed([self raiseException: e], @"Test");
 	handler.delegate = nil;
@@ -506,8 +506,8 @@
 - (void)testUKRaisesExceptionNamed_WrongNSException
 {
 	NSException *e = [NSException exceptionWithName: @"Test"
-                                             reason: @"For testing"
-                                           userInfo: nil];
+	                                         reason: @"For testing"
+	                                       userInfo: nil];
 
 	UKRaisesExceptionNamed([self raiseException: e], @"Wrong");
 	handler.delegate = nil;

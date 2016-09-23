@@ -22,11 +22,11 @@
 - (instancetype)init
 {
 	self = [super init];
-    if (self == nil)
-    	return nil;
+	if (self == nil)
+		return nil;
 
-    [NSException raise: @"Test" format: @"For exception in init"];
-    return self;
+	[NSException raise: @"Test" format: @"For exception in init"];
+	return self;
 }
 
 @end
@@ -46,7 +46,7 @@
 
 - (void)testRaisesException
 {
-    [NSException raise: @"Test" format: @"For exception in test method"];
+	[NSException raise: @"Test" format: @"For exception in test method"];
 }
 
 @end

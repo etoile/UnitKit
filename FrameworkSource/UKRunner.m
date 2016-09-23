@@ -27,28 +27,27 @@
 
 // NOTE: From EtoileFoundation/Macros.h
 #define INVALIDARG_EXCEPTION_TEST(arg, condition) do { \
-	if (NO == (condition)) \
-	{ \
-		[NSException raise: NSInvalidArgumentException format: @"For %@, %s " \
-			"must respect %s", NSStringFromSelector(_cmd), #arg , #condition]; \
-	} \
+    if (NO == (condition)) \
+    { \
+        [NSException raise: NSInvalidArgumentException format: @"For %@, %s " \
+            "must respect %s", NSStringFromSelector(_cmd), #arg , #condition]; \
+    } \
 } while (0);
 #define NILARG_EXCEPTION_TEST(arg) do { \
-	if (nil == arg) \
-	{ \
-		[NSException raise: NSInvalidArgumentException format: @"For %@, " \
-			"%s must not be nil", NSStringFromSelector(_cmd), #arg]; \
-	} \
+    if (nil == arg) \
+    { \
+        [NSException raise: NSInvalidArgumentException format: @"For %@, " \
+            "%s must not be nil", NSStringFromSelector(_cmd), #arg]; \
+    } \
 } while (0);
 
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-
 
 @implementation UKRunner
 {
 	int _testClassesRun;
 	int _testMethodsRun;
-    BOOL _releasing;
+	BOOL _releasing;
 }
 
 #pragma mark - Localization Support
@@ -81,8 +80,8 @@
  */
 - (NSString *)stringFromArgumentDomainForKey: (NSString *)key
 {
-	NSDictionary *argumentDomain = [[NSUserDefaults standardUserDefaults] 
-    	volatileDomainForName: NSArgumentDomain];
+	NSDictionary *argumentDomain = [[NSUserDefaults standardUserDefaults]
+	  volatileDomainForName: NSArgumentDomain];
 	return argumentDomain[key];
 }
 
@@ -90,7 +89,7 @@
 {
 	self = [super init];
 	if (self == nil)
-    	return nil;
+		return nil;
 
 	_classRegex = [self stringFromArgumentDomainForKey: @"c"];
 	if (nil == _classRegex)
@@ -101,7 +100,7 @@
 	_methodRegex = [self stringFromArgumentDomainForKey: @"methodRegex"];
 	_methodName = [self stringFromArgumentDomainForKey: @"methodName"];
 
-    return self;
+	return self;
 }
 
 #pragma mark - Loading Test Bundles
@@ -126,7 +125,7 @@
 	/* For Mac OS X (10.8), the test bundle info.plist must declare a principal
 	   class, to prevent +load from instantiating NSApp. */
 #ifdef GNUSTEP
-    if (![testBundle load])
+	if (![testBundle load])
 #else
 	if (![testBundle loadAndReturnError: &error])
 #endif
@@ -150,7 +149,8 @@
 	NSAssert(error == nil, [error description]);
 
 	return [files filteredArrayUsingPredicate:
-    	[NSPredicate predicateWithFormat: @"pathExtension == %@", [self testBundleExtension]]];
+	                [NSPredicate predicateWithFormat: @"pathExtension == %@",
+	                                                  [self testBundleExtension]]];
 }
 
 - (NSArray *)bundlePathsFromArgumentsAndCurrentDirectory: (NSString *)cwd
@@ -160,7 +160,7 @@
 	BOOL hadBundleInArgument = (bundlePaths.count > 0);
 
 	if (hadBundleInArgument)
-    	return bundlePaths;
+		return bundlePaths;
 
 	/* If no bundles is specified, then just collect every bundle in this folder */
 	return [self bundlePathsInCurrentDirectory: cwd];
@@ -175,7 +175,8 @@
 
 	NSLog(@"UnitKit version %@ (Etoile)", version);
 
-	@autoreleasepool {
+	@autoreleasepool
+	{
 		UKRunner *runner = [[UKRunner alloc] init];
 		NSString *cwd = [NSFileManager defaultManager].currentDirectoryPath;
 
@@ -187,7 +188,7 @@
 
 		result = [runner reportTestResults];
 	}
-    return result;
+	return result;
 }
 
 /**
@@ -204,16 +205,16 @@
 	NSMutableArray *bundlePaths = [NSMutableArray array];
 	BOOL noOptions = (args.count <= 1);
 	NSSet *paramOptions = [NSSet setWithObjects:
-						   @"-c",
-						   @"-classRegex",
-						   @"-className",
-						   @"-methodRegex",
-						   @"-methodName",
-						   nil];
-	
+	                               @"-c",
+	                               @"-classRegex",
+	                               @"-className",
+	                               @"-methodRegex",
+	                               @"-methodName",
+	                             nil];
+
 	if (noOptions)
 		return bundlePaths;
-	
+
 	for (int i = 1; i < args.count; i++)
 	{
 		NSString *arg = args[i];
@@ -226,15 +227,15 @@
 		}
 		else if ([paramOptions containsObject: arg])
 		{
-            i++;
+			i++;
 
-            if (i >= args.count || [args[i] hasPrefix: @"-"])
+			if (i >= args.count || [args[i] hasPrefix: @"-"])
 			{
 				NSLog(@"%@ argument must be followed by a parameter", arg);
 				exit(-1);
 			}
 			NSString *param = args[i];
-			
+
 			if ([arg isEqualToString: @"-c"] || [arg isEqualToString: @"-classRegex"])
 			{
 				_classRegex = param;
@@ -273,7 +274,8 @@
 
 	NSLog(@"Looking for bundle at path: %@", bundlePath);
 
-	@autoreleasepool {
+	@autoreleasepool
+	{
 		NSBundle *testBundle = [self loadBundleAtPath: bundlePath];
 
 		if (testBundle != nil)
@@ -314,8 +316,8 @@
 
 	NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
 	NSDictionary *testParams = @{@"TestObject": testObject,
-		@"TestSelector": NSStringFromSelector(testSelector),
-	 	@"TestClass": testClass};
+	                             @"TestSelector": NSStringFromSelector(testSelector),
+	                             @"TestClass": testClass};
 	NSTimer *runTimer = [NSTimer scheduledTimerWithTimeInterval: 0
 	                                                     target: self
 	                                                   selector: @selector(internalRunTest:)
@@ -347,98 +349,102 @@
 	{
 		_testMethodsRun++;
 
-        @try
-        {
-        	@autoreleasepool {
-        		[self runTestNamed: testMethodName
-            	        onInstance: instance
-        		           ofClass: testClass];
-            }
-        }
-        @catch (NSException *exception)
-        {
-        	id hint = (_releasing ? @"errExceptionOnRelease" : nil);
+		@try
+		{
+			@autoreleasepool
+			{
+				[self runTestNamed: testMethodName
+				        onInstance: instance
+				           ofClass: testClass];
+			}
+		}
+		@catch (NSException *exception)
+		{
+			id hint = (_releasing ? @"errExceptionOnRelease" : nil);
 
-            [[UKTestHandler handler] reportException: exception
-                                             inClass: testClass
-                                                hint: hint];
-        }
-        _releasing = NO;
-    }
+			[[UKTestHandler handler] reportException: exception
+			                                 inClass: testClass
+			                                    hint: hint];
+		}
+		_releasing = NO;
+	}
 }
 
-- (void)runTestNamed: (NSString *)testMethodName onInstance: (BOOL)instance ofClass: (Class)testClass
+- (void)runTestNamed: (NSString *)testMethodName
+          onInstance: (BOOL)instance
+             ofClass: (Class)testClass
 {
-    id object = nil;
-    
-    // Create the object to test
-    
-    if (instance)
-    {
-        @try
-        {
-            object = [[testClass alloc] init];
-        }
-        @catch (NSException *exception)
-        {
-            [[UKTestHandler handler] reportException: exception
-                                             inClass: testClass
-                                                hint: @"errExceptionOnInit"];
-        }
-        
-        // N.B.: If -init throws an exception or returns nil, we don't
-        // attempt to run any more methods on this class
-        if (object == nil)
-            return;
-    }
-    else
-    {
-        object = testClass;
-    }
-    
-    // Run the test method
-    
-    @try
-    {
-        SEL testSel = NSSelectorFromString(testMethodName);
-        
-        /* This pool makes easier to separate autorelease issues between:
-         - test method
-         - test object configuration due to -init and -dealloc
-         
-         For testing CoreObject, this also ensures all autoreleased
-         objects in relation to a db are deallocated before closing
-         the db connection in -dealloc (see TestCommon.h in CoreObject
-         for details) */
-        @autoreleasepool {
-            [self runTest: testSel onObject: object class: testClass];
-        }
-    }
-    @catch (NSException *exception)
-    {
-        [[UKTestHandler handler] reportException: exception
-                                         inClass: testClass
-                                            hint: testMethodName];
-    }
-    
-    // Release the object
-    
-    if (instance)
-    {
-        @try
-        {
-        	_releasing = YES;
-            object = nil;
-        }
-        @catch (NSException *exception)
-        {
-        	// N.B.: With ARC, we usually catch dealloc exception later in the
-            // caller, when the enclosing autorelease pool goes away.
-            [[UKTestHandler handler] reportException: exception
-                                             inClass: [object class]
-                                                hint: @"errExceptionOnRelease"];
-        }
-    }
+	id object = nil;
+
+	// Create the object to test
+
+	if (instance)
+	{
+		@try
+		{
+			object = [[testClass alloc] init];
+		}
+		@catch (NSException *exception)
+		{
+			[[UKTestHandler handler] reportException: exception
+			                                 inClass: testClass
+			                                    hint: @"errExceptionOnInit"];
+		}
+
+		// N.B.: If -init throws an exception or returns nil, we don't
+		// attempt to run any more methods on this class
+		if (object == nil)
+			return;
+	}
+	else
+	{
+		object = testClass;
+	}
+
+	// Run the test method
+
+	@try
+	{
+		SEL testSel = NSSelectorFromString(testMethodName);
+
+		/* This pool makes easier to separate autorelease issues between:
+		 - test method
+		 - test object configuration due to -init and -dealloc
+
+		 For testing CoreObject, this also ensures all autoreleased
+		 objects in relation to a db are deallocated before closing
+		 the db connection in -dealloc (see TestCommon.h in CoreObject
+		 for details) */
+		@autoreleasepool
+		{
+			[self runTest: testSel onObject: object class: testClass];
+		}
+	}
+	@catch (NSException *exception)
+	{
+		[[UKTestHandler handler] reportException: exception
+		                                 inClass: testClass
+		                                    hint: testMethodName];
+	}
+
+	// Release the object
+
+	if (instance)
+	{
+		@try
+		{
+			_releasing = YES;
+			object = nil;
+		}
+		@catch (NSException *exception)
+		{
+			// N.B.: With ARC, we usually catch dealloc exception later in the
+			// caller, when the enclosing autorelease pool goes away.
+			[[UKTestHandler handler] reportException: exception
+			                                 inClass: [object class]
+			                                    hint: @"errExceptionOnRelease"];
+		}
+	}
 }
 
 - (void)runTestsInClass: (Class)testClass
@@ -473,11 +479,11 @@
 	}
 
 	NSMutableArray *filteredClassNames = [NSMutableArray array];
-	
+
 	for (NSString *testClassName in testClassNames)
 	{
 		if (_classRegex == nil || [testClassName rangeOfString: _classRegex
-		                                              options: NSRegularExpressionSearch].location != NSNotFound)
+		                                               options: NSRegularExpressionSearch].location != NSNotFound)
 		{
 			[filteredClassNames addObject: testClassName];
 		}
@@ -496,9 +502,9 @@
 		}
 		return [NSArray array];
 	}
-	
+
 	NSMutableArray *filteredMethodNames = [NSMutableArray array];
-	
+
 	for (NSString *testMethodName in testMethodNames)
 	{
 		if (_methodRegex == nil || [testMethodName rangeOfString: self.methodRegex
@@ -507,7 +513,7 @@
 			[filteredMethodNames addObject: testMethodName];
 		}
 	}
-	
+
 	return filteredMethodNames;
 }
 
@@ -516,16 +522,16 @@
 	NILARG_EXCEPTION_TEST(bundle);
 
 	[self runTestsWithClassNames: nil
-                        inBundle: bundle
-                  principalClass: bundle.principalClass];
+	                    inBundle: bundle
+	              principalClass: bundle.principalClass];
 }
 
 - (void)runTestsWithClassNames: (NSArray *)testClassNames
                 principalClass: (Class)principalClass
 {
 	[self runTestsWithClassNames: testClassNames
-                        inBundle: [NSBundle mainBundle]
-                  principalClass: principalClass];
+	                    inBundle: [NSBundle mainBundle]
+	              principalClass: principalClass];
 }
 
 /**
@@ -545,7 +551,7 @@
                       inBundle: (NSBundle *)bundle
                 principalClass: (Class)principalClass
 {
-    NSDate *startDate = [NSDate date];
+	NSDate *startDate = [NSDate date];
 
 	if ([principalClass respondsToSelector: @selector(willRunTestSuite)])
 	{
@@ -553,19 +559,19 @@
 	}
 
 	NSArray *classNames =
-    		(testClassNames != nil ? testClassNames : UKTestClassNamesFromBundle(bundle));
+	  (testClassNames != nil ? testClassNames : UKTestClassNamesFromBundle(bundle));
 
 	for (NSString *name in [self filterTestClassNames: classNames])
 	{
-        [self runTestsInClass: NSClassFromString(name)];
+		[self runTestsInClass: NSClassFromString(name)];
 	}
 
 	if ([principalClass respondsToSelector: @selector(didRunTestSuite)])
 	{
 		[principalClass didRunTestSuite];
 	}
-    
-    NSLog(@"Took %d ms\n", (int)([[NSDate date] timeIntervalSinceDate: startDate] * 1000));
+
+	NSLog(@"Took %d ms\n", (int)([[NSDate date] timeIntervalSinceDate: startDate] * 1000));
 }
 
 #pragma mark - Reporting Test Results
@@ -578,7 +584,7 @@
 
 	// TODO: May be be extract in -testResultSummary
 	NSLog(@"Result: %i classes, %i methods, %i tests, %i failed, %i exceptions",
-	  _testClassesRun, _testMethodsRun, (testsPassed + testsFailed), testsFailed, exceptionsReported);
+	      _testClassesRun, _testMethodsRun, (testsPassed + testsFailed), testsFailed, exceptionsReported);
 
 	return (testsFailed == 0 && exceptionsReported == 0 ? 0 : -1);
 }

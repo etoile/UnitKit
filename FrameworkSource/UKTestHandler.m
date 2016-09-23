@@ -52,19 +52,25 @@
 	// whole description since it's very annoying to see failed tests with an
 	// useless truncated description
 #if 0
-    if ([description hasPrefix:@"<"] && [description hasSuffix:@">"]) {
-        // assume it's <Classname 0x2394920> and return
-        if ([description length] < 30) {
-            return description;
-        } else {
-            description = [description substringWithRange:NSMakeRange(0, 26)];
-            description = [description stringByAppendingString:@"...>"];
-            return description;
-        }
-    } else if ([description length] > 30) {
-        description = [description substringWithRange:NSMakeRange(0, 27)];
-        description = [description stringByAppendingString:@"..."];
-    } 
+	if ([description hasPrefix:@"<"] && [description hasSuffix:@">"])
+	{
+		// assume it's <Classname 0x2394920> and return
+		if ([description length] < 30)
+		{
+			return description;
+		}
+		else
+		{
+			description = [description substringWithRange:NSMakeRange(0, 26)];
+			description = [description stringByAppendingString:@"...>"];
+			return description;
+		}
+	}
+	else if ([description length] > 30)
+	{
+		description = [description substringWithRange:NSMakeRange(0, 27)];
+		description = [description stringByAppendingString:@"..."];
+	}
 #endif
 	return [NSString stringWithFormat: @"\"%@\"", description];
 }
@@ -131,15 +137,21 @@
 		if ([hint isEqual: @"errExceptionOnInit"] || [hint isEqual: @"errExceptionOnRelease"])
 		{
 			msg = [[self class] localizedString: hint];
-			msg = [NSString stringWithFormat: msg, NSStringFromClass(testClass), excstring, exception.callStackSymbols];
+			msg = [NSString stringWithFormat: msg,
+			                                  NSStringFromClass(testClass),
+			                                  excstring,
+			                                  exception.callStackSymbols];
 		}
 		else
 		{
 			NSString *testMethodName = hint;
 
 			msg = [[self class] localizedString: @"errExceptionInTestMethod"];
-			msg = [NSString stringWithFormat: msg, NSStringFromClass(testClass),
-			                                  testMethodName, excstring, exception.callStackSymbols];
+			msg = [NSString stringWithFormat: msg,
+			                                  NSStringFromClass(testClass),
+			                                  testMethodName,
+			                                  excstring,
+			                                  exception.callStackSymbols];
 		}
 
 		[self reportWarning: msg];
@@ -495,7 +507,10 @@
 	}
 }
 
-- (void)testString: (NSString *)a notEqualTo: (NSString *)b inFile: (const char *)filename line: (int)line
+- (void)testString: (NSString *)a
+        notEqualTo: (NSString *)b
+            inFile: (const char *)filename
+              line: (int)line
 {
 	NSString *dispA = [UKTestHandler displayStringForObject: a];
 	NSString *dispB = [UKTestHandler displayStringForObject: b];
@@ -648,7 +663,7 @@
 	{
 		NSString *msg = [UKTestHandler localizedString: @"msgUKRaisesSpecificClass.fail"];
 		msg = [NSString stringWithFormat: msg, [expectedClass description],
-		                                       [[raisedObject class] description]];
+		                                  [[raisedObject class] description]];
 
 		[self reportStatus: NO inFile: filename line: line message: msg];
 	}
