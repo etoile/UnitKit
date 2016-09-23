@@ -18,7 +18,7 @@ FRAMEWORK_NAME = UnitKit
 # ABI version (the API version is in CFBundleShortVersionString of FrameworkSource/Info.plist)
 UnitKit_VERSION = 1.5
 
-UnitKit_OBJCFLAGS = -std=c99 
+UnitKit_OBJCFLAGS = -std=c99 -fobjc-arc
 UnitKit_LIBRARIES_DEPEND_UPON = $(FND_LIBS) $(OBJC_LIBS) $(SYSTEM_LIBS)
 
 OTHER_HEADER_DIRS = FrameworkSource
