@@ -1,8 +1,8 @@
 /**
-	Copyright (C) 2014 Quentin Mathe
+    Copyright (C) 2014 Quentin Mathe
 
-	Date:  January 2014
-	License:  Apache License, Version 2.0  (see COPYING)
+    Date:  January 2014
+    License:  Apache License, Version 2.0  (see COPYING)
  */
 
 #import "TestObject.h"
@@ -21,12 +21,12 @@
 
 - (instancetype)init
 {
-	self = [super init];
-	if (self == nil)
-		return nil;
+    self = [super init];
+    if (self == nil)
+        return nil;
 
-	[NSException raise: @"Test" format: @"For exception in init"];
-	return self;
+    [NSException raise: @"Test" format: @"For exception in init"];
+    return self;
 }
 
 @end
@@ -36,7 +36,7 @@
 
 - (void)dealloc
 {
-	[NSException raise: @"Test" format: @"For exception in dealloc"];
+    [NSException raise: @"Test" format: @"For exception in dealloc"];
 }
 
 @end
@@ -46,7 +46,7 @@
 
 - (void)testRaisesException
 {
-	[NSException raise: @"Test" format: @"For exception in test method"];
+    [NSException raise: @"Test" format: @"For exception in test method"];
 }
 
 @end

@@ -1,22 +1,22 @@
 /*
-	Copyright (C) 2004 James Duncan Davidson, Quentin Mathe
+    Copyright (C) 2004 James Duncan Davidson, Quentin Mathe
 
-	License:  Apache License, Version 2.0  (see LICENSE)
+    License:  Apache License, Version 2.0  (see LICENSE)
  
-	Licensed under the Apache License, Version 2.0 (the "License");
-	you may not use this file except in compliance with the License.
-	You may obtain a copy of the License at
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
  
-	http://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
  
-	Unless required by applicable law or agreed to in writing, software
-	distributed under the License is distributed on an "AS IS" BASIS,
-	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-	See the License for the specific language governing permissions and
-	limitations under the License.
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
  
-	The use of the Apache License does not indicate that this project is
-	affiliated with the Apache Software Foundation.
+    The use of the Apache License does not indicate that this project is
+    affiliated with the Apache Software Foundation.
  */
 
 #import "UKRunnerTests.h"
@@ -31,7 +31,7 @@ static BOOL randomObjectInitialized = NO;
 
 + (void)initialize
 {
-	randomObjectInitialized = YES;
+    randomObjectInitialized = YES;
 }
 
 @end
@@ -45,7 +45,7 @@ static BOOL testedObjectInitialized = NO;
 
 + (void)initialize
 {
-	testedObjectInitialized = YES;
+    testedObjectInitialized = YES;
 }
 
 @end
@@ -54,64 +54,64 @@ static BOOL testedObjectInitialized = NO;
 
 - (id)init
 {
-	self = [super init];
-	if (self == nil)
-		return nil;
+    self = [super init];
+    if (self == nil)
+        return nil;
 
-	handler = [UKTestHandler handler];
+    handler = [UKTestHandler handler];
 
 #if !(TARGET_OS_IPHONE)
-	NSString *mainTestBundlePath = [NSBundle bundleForClass: [self class]].bundlePath;
-	NSString *testBundlePath = [[mainTestBundlePath stringByDeletingLastPathComponent]
-	  stringByAppendingPathComponent: @"TestBundle.bundle"];
+    NSString *mainTestBundlePath = [NSBundle bundleForClass: [self class]].bundlePath;
+    NSString *testBundlePath = [[mainTestBundlePath stringByDeletingLastPathComponent]
+      stringByAppendingPathComponent: @"TestBundle.bundle"];
 
-	testBundle = [[NSBundle alloc] initWithPath: testBundlePath];
-	NSAssert1(testBundle != nil, @"Found not test bundle at %@", testBundlePath);
-	[testBundle load];
+    testBundle = [[NSBundle alloc] initWithPath: testBundlePath];
+    NSAssert1(testBundle != nil, @"Found not test bundle at %@", testBundlePath);
+    [testBundle load];
 #endif
 
-	return self;
+    return self;
 }
 
 - (void)reportException: (NSException *)exception
                 inClass: (Class)testClass
                    hint: (NSString *)hint
 {
-	reportedException = exception;
-	reportedTestClass = testClass;
-	reportedMethodName = hint;
+    reportedException = exception;
+    reportedTestClass = testClass;
+    reportedMethodName = hint;
 }
 
 - (void)testRunLoopAddition
 {
-	NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
-	[runLoop performSelector: @selector(runLoopTrigger)
-	                  target: self
-	                argument: nil
-	                   order: 0
-	                   modes: @[NSDefaultRunLoopMode]];
+    NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
+    [runLoop performSelector: @selector(runLoopTrigger)
+                      target: self
+                    argument: nil
+                       order: 0
+                       modes: @[NSDefaultRunLoopMode]];
 }
 
 - (void)runLoopTrigger
 {
-	NSThread *thread = [NSThread currentThread];
-	thread.threadDictionary[@"UKLoopTriggerRan"] = @"YES";
+    NSThread *thread = [NSThread currentThread];
+    thread.threadDictionary[@"UKLoopTriggerRan"] = @"YES";
 }
 
 - (void)testRunLoopAdditionExecuted
 {
-	NSThread *thread = [NSThread currentThread];
-	NSString *result = thread.threadDictionary[@"UKLoopTriggerRan"];
+    NSThread *thread = [NSThread currentThread];
+    NSString *result = thread.threadDictionary[@"UKLoopTriggerRan"];
 
-	UKStringsEqual(result, @"YES");
+    UKStringsEqual(result, @"YES");
 
-	[thread.threadDictionary removeObjectForKey: @"UKLoopTriggerRan"];
+    [thread.threadDictionary removeObjectForKey: @"UKLoopTriggerRan"];
 }
 
 - (void)testRunLoopMode
 {
-	NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
-	UKStringsEqual([runLoop currentMode], NSDefaultRunLoopMode);
+    NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
+    UKStringsEqual([runLoop currentMode], NSDefaultRunLoopMode);
 
 }
 
@@ -119,17 +119,17 @@ static BOOL testedObjectInitialized = NO;
 
 - (void)testClassesFromBundle
 {
-	NSArray *testClasses = UKTestClassNamesFromBundle(testBundle);
+    NSArray *testClasses = UKTestClassNamesFromBundle(testBundle);
 
-	UKIntsEqual(2, [testClasses count]);
-	UKTrue([testClasses containsObject: @"TestTwo"]);
-	UKTrue([testClasses containsObject: @"TestThree"]);
+    UKIntsEqual(2, [testClasses count]);
+    UKTrue([testClasses containsObject: @"TestTwo"]);
+    UKTrue([testClasses containsObject: @"TestThree"]);
 
-	UKFalse(randomObjectInitialized);
+    UKFalse(randomObjectInitialized);
 #ifdef GNUSTEP
-	UKFalse(testedObjectInitialized);
+    UKFalse(testedObjectInitialized);
 #else
-	UKTrue(testedObjectInitialized);
+    UKTrue(testedObjectInitialized);
 #endif
 }
 
@@ -137,60 +137,60 @@ static BOOL testedObjectInitialized = NO;
 
 - (void)testMethodNamesFromClass
 {
-	NSArray *testMethods = UKTestMethodNamesFromClass(NSClassFromString(@"TestTwo"));
+    NSArray *testMethods = UKTestMethodNamesFromClass(NSClassFromString(@"TestTwo"));
 
-	UKIntsEqual(3, [testMethods count]);
-	UKTrue([testMethods containsObject: @"testOne"]);
-	UKTrue([testMethods containsObject: @"testTwo"]);
-	UKTrue([testMethods containsObject: @"testThree"]);
+    UKIntsEqual(3, [testMethods count]);
+    UKTrue([testMethods containsObject: @"testOne"]);
+    UKTrue([testMethods containsObject: @"testTwo"]);
+    UKTrue([testMethods containsObject: @"testThree"]);
 }
 
 - (void)testReportInitException
 {
-	UKRunner *runner = [[UKRunner alloc] init];
-	[handler setDelegate: self];
+    UKRunner *runner = [[UKRunner alloc] init];
+    [handler setDelegate: self];
 
-	UKDoesNotRaiseException([runner runTests: @[@"testEmpty"]
-	                              onInstance: YES
-	                                 ofClass: [TestObjectInit class]]);
+    UKDoesNotRaiseException([runner runTests: @[@"testEmpty"]
+                                  onInstance: YES
+                                     ofClass: [TestObjectInit class]]);
 
-	UKStringsEqual(@"For exception in init", reportedException.reason);
-	UKObjectsEqual([TestObjectInit class], reportedTestClass);
-	UKStringsEqual(@"errExceptionOnInit", reportedMethodName);
+    UKStringsEqual(@"For exception in init", reportedException.reason);
+    UKObjectsEqual([TestObjectInit class], reportedTestClass);
+    UKStringsEqual(@"errExceptionOnInit", reportedMethodName);
 
-	handler.delegate = nil;
+    handler.delegate = nil;
 }
 
 - (void)testReportDeallocException
 {
-	UKRunner *runner = [[UKRunner alloc] init];
-	[handler setDelegate: self];
+    UKRunner *runner = [[UKRunner alloc] init];
+    [handler setDelegate: self];
 
-	UKDoesNotRaiseException([runner runTests: @[@"testEmpty"]
-	                              onInstance: YES
-	                                 ofClass: [TestObjectDealloc class]]);
+    UKDoesNotRaiseException([runner runTests: @[@"testEmpty"]
+                                  onInstance: YES
+                                     ofClass: [TestObjectDealloc class]]);
 
-	UKStringsEqual(@"For exception in dealloc", reportedException.reason);
-	UKObjectsEqual([TestObjectDealloc class], reportedTestClass);
-	UKStringsEqual(@"errExceptionOnRelease", reportedMethodName);
+    UKStringsEqual(@"For exception in dealloc", reportedException.reason);
+    UKObjectsEqual([TestObjectDealloc class], reportedTestClass);
+    UKStringsEqual(@"errExceptionOnRelease", reportedMethodName);
 
-	handler.delegate = nil;
+    handler.delegate = nil;
 }
 
 - (void)testReportTestMethodException
 {
-	UKRunner *runner = [[UKRunner alloc] init];
-	[handler setDelegate: self];
+    UKRunner *runner = [[UKRunner alloc] init];
+    [handler setDelegate: self];
 
-	UKDoesNotRaiseException([runner runTests: @[@"testRaisesException"]
-	                              onInstance: YES
-	                                 ofClass: [TestObjectTestMethod class]]);
+    UKDoesNotRaiseException([runner runTests: @[@"testRaisesException"]
+                                  onInstance: YES
+                                     ofClass: [TestObjectTestMethod class]]);
 
-	UKStringsEqual(@"For exception in test method", reportedException.reason);
-	UKObjectsEqual([TestObjectTestMethod class], reportedTestClass);
-	UKStringsEqual(@"testRaisesException", reportedMethodName);
+    UKStringsEqual(@"For exception in test method", reportedException.reason);
+    UKObjectsEqual([TestObjectTestMethod class], reportedTestClass);
+    UKStringsEqual(@"testRaisesException", reportedMethodName);
 
-	handler.delegate = nil;
+    handler.delegate = nil;
 }
 
 /*

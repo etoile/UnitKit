@@ -1,8 +1,8 @@
 /**
-	Copyright (C) 2014 Quentin Mathe
+    Copyright (C) 2014 Quentin Mathe
 
-	Date:  January 2014
-	License:  Apache License, Version 2.0  (see COPYING)
+    Date:  January 2014
+    License:  Apache License, Version 2.0  (see COPYING)
  */
 
 #import <Foundation/Foundation.h>
