@@ -266,7 +266,7 @@
 {
     bundlePath = bundlePath.stringByExpandingTildeInPath;
 
-    if (!bundlePath.absolutePath)
+    if (![bundlePath isAbsolutePath])
     {
         bundlePath = [cwd stringByAppendingPathComponent: bundlePath];
         bundlePath = bundlePath.stringByStandardizingPath;
@@ -324,7 +324,7 @@
                                                        userInfo: testParams
                                                         repeats: NO];
 
-    while (runTimer.valid)
+    while ([runTimer isValid])
     {
         // NOTE: nil, [NSDate date], time intervals such as 0, 0.0000001 or
         // LDBL_EPSILON don't work on GNUstep.
