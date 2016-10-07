@@ -174,12 +174,12 @@
 /** @taskunit Number Primitive Test Assertions */
 
 
-- (void)testInt: (int)a
-        equalTo: (int)b
+- (void)testInt: (long long)a
+        equalTo: (long long)b
          inFile: (const char *)filename
            line: (int)line;
-- (void)testInt: (int)a
-     notEqualTo: (int)b
+- (void)testInt: (long long)a
+     notEqualTo: (long long)b
          inFile: (const char *)filename
            line: (int)line;
 - (void)testFloat: (float)a

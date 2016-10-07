@@ -5,6 +5,7 @@ UnitKit NEWS
 --------------------
 
 - Migrated to modern Objective-C and ARC
+- Support for large or unsigned integer types with UKIntsEqual() and UKIntsNotEqual()
 
 1.5 (CoreObject 0.5)
 --------------------

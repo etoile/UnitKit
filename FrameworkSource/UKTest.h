@@ -61,14 +61,18 @@
  * Tests that two primitive integers are equal.
  *
  * a is the expected value and b the tested value.
+ *
+ * Don't pass unsigned long long integers that cannot safely casted to long long.
  */
-#define UKIntsEqual(a, b) [[UKTestHandler handler] testInt:(a) equalTo:(b) inFile:__FILE__ line:__LINE__]
+#define UKIntsEqual(a, b) [[UKTestHandler handler] testInt:((long long)a) equalTo:((long long)b) inFile:__FILE__ line:__LINE__]
 /**
  * Tests that two primitive integers are not equal.
  *
  * a is the non-expected value and b the tested value.
+ *
+ * Don't pass unsigned long long integers that cannot safely casted to long long.
  */
-#define UKIntsNotEqual(a, b) [[UKTestHandler handler] testInt:(a) notEqualTo:(b) inFile:__FILE__ line:__LINE__]
+#define UKIntsNotEqual(a, b) [[UKTestHandler handler] testInt:((long long)a) notEqualTo:((long long)b) inFile:__FILE__ line:__LINE__]
 /**
  * Tests that two primitive floats are equal or almost, this evaluates whether 
  * <code>fabs(a - b) &lt;= d</code> is true.
