@@ -38,6 +38,8 @@
 		60B98EF5180560E700D1FFFF /* UnitKitBundle.trgttmpl in CopyFiles */ = {isa = PBXBuildFile; fileRef = AE8CCF780680B56F008CA594 /* UnitKitBundle.trgttmpl */; };
 		60B98EF71805611E00D1FFFF /* UnitKit Testing Bundle.xctemplate in CopyFiles */ = {isa = PBXBuildFile; fileRef = 60B98EE418055E0500D1FFFF /* UnitKit Testing Bundle.xctemplate */; };
 		60B98EF91805665B00D1FFFF /* Objective-C UnitKit test case class.xctemplate in CopyFiles */ = {isa = PBXBuildFile; fileRef = 60B98EE318055DD000D1FFFF /* Objective-C UnitKit test case class.xctemplate */; };
+		60CDE0651DA7AC28007AC27B /* UKTestHandler.strings in Resources */ = {isa = PBXBuildFile; fileRef = 60CDE0631DA7AC28007AC27B /* UKTestHandler.strings */; };
+		60CDE0661DA7AC28007AC27B /* UKTestHandler.strings in Resources */ = {isa = PBXBuildFile; fileRef = 60CDE0631DA7AC28007AC27B /* UKTestHandler.strings */; };
 		60E23C0A18B5134100CE38D0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60E23C0918B5134100CE38D0 /* UIKit.framework */; };
 		60E23C0B18B5134100CE38D0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60A71B4418B505DA0038CE05 /* Foundation.framework */; };
 		60E23C0D18B5134100CE38D0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60E23C0C18B5134100CE38D0 /* CoreGraphics.framework */; };
@@ -195,6 +197,7 @@
 		60A71B4418B505DA0038CE05 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		60B98EE318055DD000D1FFFF /* Objective-C UnitKit test case class.xctemplate */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Objective-C UnitKit test case class.xctemplate"; path = "XcodeIntegration/File Templates/Cocoa/Objective-C UnitKit test case class.xctemplate"; sourceTree = "<group>"; };
 		60B98EE418055E0500D1FFFF /* UnitKit Testing Bundle.xctemplate */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "UnitKit Testing Bundle.xctemplate"; path = "XcodeIntegration/Project Templates/Mac/Other/UnitKit Testing Bundle.xctemplate"; sourceTree = "<group>"; };
+		60CDE0641DA7AC28007AC27B /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/UKTestHandler.strings; sourceTree = "<group>"; };
 		60E23C0818B5134100CE38D0 /* TestUnitKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestUnitKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60E23C0918B5134100CE38D0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		60E23C0C18B5134100CE38D0 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
@@ -444,6 +447,7 @@
 				AE923D8905C3B9EC00549058 /* UKRunner.h */,
 				AE923D8A05C3B9EC00549058 /* UKRunner.m */,
 				32DBCF5E0370ADEE00C91783 /* Info.plist */,
+				60CDE0631DA7AC28007AC27B /* UKTestHandler.strings */,
 			);
 			path = FrameworkSource;
 			sourceTree = "<group>";
@@ -731,6 +735,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				60A71B7718B507910038CE05 /* LICENSE in Resources */,
+				60CDE0661DA7AC28007AC27B /* UKTestHandler.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -747,6 +752,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AEEB74D106B1BEFD00BE53E8 /* LICENSE in Resources */,
+				60CDE0651DA7AC28007AC27B /* UKTestHandler.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -958,6 +964,17 @@
 			targetProxy = AEBED02B06AFAE9E00451E26 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		60CDE0631DA7AC28007AC27B /* UKTestHandler.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				60CDE0641DA7AC28007AC27B /* English */,
+			);
+			name = UKTestHandler.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		600CE4F509F24490008BA30D /* Debug */ = {
