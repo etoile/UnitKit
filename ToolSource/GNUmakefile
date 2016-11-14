@@ -4,8 +4,6 @@ PRINT_PROJECT_NAME = NO
 
 TOOL_NAME = ukrun
 
-ukrun_OBJCFLAGS = $(UnitKit_OBJCFLAGS)
-
 # For UnitKit, etoile.make after-all:: is not executed before all subprojects 
 # are built. Hence UnitKit.framework is not present in the Build directory at 
 # 'ukrun' build time.
