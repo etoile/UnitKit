@@ -17,5 +17,7 @@ $(FRAMEWORK_NAME)_HEADER_FILES = TestClass.h
 
 $(FRAMEWORK_NAME)_OBJC_FILES = TestClass.m
 
+include ../../compilerflags.preamble
+
 include $(GNUSTEP_MAKEFILES)/framework.make
 -include ../../../../etoile.make

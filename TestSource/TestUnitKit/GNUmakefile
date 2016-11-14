@@ -12,6 +12,8 @@ $(BUNDLE_NAME)_BUNDLE_LIBS = -lUnitKit -lTestFramework $(FND_LIBS)
 
 $(BUNDLE_NAME)_OBJC_FILES = $(wildcard *.m)
 
+include ../../compilerflags.preamble
+
 include $(GNUSTEP_MAKEFILES)/bundle.make
 -include ../../../../etoile.make
 

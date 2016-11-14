@@ -1,0 +1,1 @@
+ADDITIONAL_OBJCFLAGS = -std=c99 -fobjc-arc
