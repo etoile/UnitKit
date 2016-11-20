@@ -1,6 +1,24 @@
-notifications:
-  email:
-    recipients:
-      - etoile-testbuild@gna.org
-language: objective-c
-script: ./test-macosx.sh
+#notifications:
+#  email:
+#    recipients:
+#     - etoile-testbuild@gna.org
+
+os:
+  - linux
+  - osx
+
+compiler:
+  - clang
+
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      sudo: required
+      language: cpp
+    - os: osx
+      language: objective-c
+
+script:
+  - if [[ $TRAVIS_OS_NAME == 'osx' ]]; then ./test-macosx.sh; fi
+  - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then ./test-linux.sh; fi
