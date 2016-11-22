@@ -5,6 +5,8 @@
 
 language: generic
 
+compiler: gcc
+
 os:
   - linux
   - osx
@@ -18,6 +20,8 @@ matrix:
       compiler: clang
     - os: osx
       language: objective-c
+  exclude:
+    - compiler: gcc
 
 script:
   - if [[ $TRAVIS_OS_NAME == 'osx' ]]; then ./test-macosx.sh; fi
