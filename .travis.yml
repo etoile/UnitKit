@@ -18,11 +18,15 @@ matrix:
       sudo: required
       language: cpp
       compiler: clang
+      env: TEST_BUILD=gnustep
     - os: osx
       language: objective-c
+      compiler: clang
+      env: TEST_BUILD=mac
   exclude:
     - compiler: gcc
+    - language: generic
 
 script:
-  - if [[ $TRAVIS_OS_NAME == 'osx' ]]; then ./test-macosx.sh; fi
-  - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then ./test-linux.sh; fi
+  - if [[ $TRAVIS_OS_NAME == 'osx' -a $TEST_BUILD == 'mac' ]]; then ./test-macosx.sh; fi
+  - if [[ $TRAVIS_OS_NAME == 'linux' -a $TEST_BUILD == 'gnustep' ]]; then ./test-linux.sh; fi
