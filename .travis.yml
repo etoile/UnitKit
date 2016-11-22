@@ -3,6 +3,8 @@
 #    recipients:
 #     - etoile-testbuild@gna.org
 
+language: generic
+
 os:
   - linux
   - osx
