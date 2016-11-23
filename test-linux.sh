@@ -2,6 +2,9 @@
 
 set -o verbose
 
+export CXX=clang-3.8++
+export CC=clang-3.8
+
 LIBOBJC2_VERSION=1.8.1
 MAKE_VERSION=2.6.1
 BASE_VERSION=1.24.9
