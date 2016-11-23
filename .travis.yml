@@ -28,5 +28,5 @@ matrix:
     - language: generic
 
 script:
-  - if [[ $TRAVIS_OS_NAME == 'osx' -a $TEST_BUILD == 'mac' ]]; then ./test-macosx.sh; fi
-  - if [[ $TRAVIS_OS_NAME == 'linux' -a $TEST_BUILD == 'gnustep' ]]; then ./test-linux.sh; fi
+  - if [[ $TRAVIS_OS_NAME == 'osx' && $TEST_BUILD == 'mac' ]]; then ./test-macosx.sh; fi
+  - if [[ $TRAVIS_OS_NAME == 'linux' && $TEST_BUILD == 'gnustep' ]]; then ./test-linux.sh; fi
