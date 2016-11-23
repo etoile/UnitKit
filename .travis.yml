@@ -11,6 +11,12 @@ os:
   - linux
   - osx
 
+apt:
+  sources:
+    - llvm-toolchain-trusty-3.8
+  packages:
+    - clang-3.8
+
 matrix:
   include:
     - os: linux
