@@ -2,6 +2,10 @@
 
 set -o verbose
 
+LIBOBJC2_VERSION=1.8.1
+MAKE_VERSION=2.6.1
+BASE_VERSION=1.24.9
+
 # deps
 sudo apt-get -y install libblocksruntime-dev libkqueue-dev libpthread-workqueue-dev cmake
 sudo apt-get -y install libxml2-dev libxslt1-dev libffi-dev libssl-dev libgnutls-dev libicu-dev libgmp3-dev
@@ -10,10 +14,10 @@ sudo apt-get -y install libsqlite3-dev
 
 # repos
 git clone https://github.com/nickhutchinson/libdispatch && git checkout bd1808980b04830cbbd79c959b8bc554085e38a1 && git clean -dfx
-git clone https://github.com/gnustep/libobjc2  && git checkout tags/v1.8.1 && git clean -dfx
+git clone https://github.com/gnustep/libobjc2  && git checkout tags/v${LIB_OBJC2_VERSION} && git clean -dfx
 # 2.6.8 breaks --disable-mixedabi by omitting -fobjc-nonfragile-abi among the compiler flags
-wget ftp://ftp.gnustep.org/pub/gnustep/core/gnustep-make-2.6.7.tar.gz -O make.tar.gz && tar -xf make.tar.gz
-wget ftp://ftp.gnustep.org/pub/gnustep/core/gnustep-base-1.24.9.tar.gz -O base.tar.gz && tar -xf base.tar.gz
+wget -N ftp://ftp.gnustep.org/pub/gnustep/core/gnustep-make-${MAKE_VERSION}.tar.gz && tar -xf gnustep-make-${MAKE_VERSION}.tar.gz && mv gnustep-make-${MAKE_VERSION} make
+wget -N ftp://ftp.gnustep.org/pub/gnustep/core/gnustep-base-${BASE_VERSION}.tar.gz && tar -xf gnustep-base-${BASE_VERSION}.tar.gz && mv gnustep-base-${BASE_VERSION} base
 git clone https://github.com/etoile/UnitKit && git clean -dfx
 
 # libdispatch
