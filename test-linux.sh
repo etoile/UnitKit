@@ -27,7 +27,7 @@ mkdir build && cd build
 cd ../..
 
 # libobjc2
-cd libobjc2  && git clean -dfx && git checkout tags/v${LIB_OBJC2_VERSION}
+cd libobjc2  && git clean -dfx && git checkout tags/v${LIBOBJC2_VERSION}
 mkdir build && cd build
 cmake .. && make -j8 && sudo make install || exit 1
 cd ../..
