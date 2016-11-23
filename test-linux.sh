@@ -13,38 +13,38 @@ sudo apt-get -y install libjpeg-dev libtiff-dev libpng-dev libgif-dev libx11-dev
 sudo apt-get -y install libsqlite3-dev
 
 # repos
-git clone https://github.com/nickhutchinson/libdispatch && git checkout bd1808980b04830cbbd79c959b8bc554085e38a1 && git clean -dfx
-git clone https://github.com/gnustep/libobjc2  && git checkout tags/v${LIB_OBJC2_VERSION} && git clean -dfx
+git clone https://github.com/nickhutchinson/libdispatch
+git clone https://github.com/gnustep/libobjc2
 # 2.6.8 breaks --disable-mixedabi by omitting -fobjc-nonfragile-abi among the compiler flags
-wget -N ftp://ftp.gnustep.org/pub/gnustep/core/gnustep-make-${MAKE_VERSION}.tar.gz && tar -xf gnustep-make-${MAKE_VERSION}.tar.gz && mv gnustep-make-${MAKE_VERSION} make
-wget -N ftp://ftp.gnustep.org/pub/gnustep/core/gnustep-base-${BASE_VERSION}.tar.gz && tar -xf gnustep-base-${BASE_VERSION}.tar.gz && mv gnustep-base-${BASE_VERSION} base
-git clone https://github.com/etoile/UnitKit && git clean -dfx
+wget -N ftp://ftp.gnustep.org/pub/gnustep/core/gnustep-make-${MAKE_VERSION}.tar.gz && tar -xf gnustep-make-${MAKE_VERSION}.tar.gz
+wget -N ftp://ftp.gnustep.org/pub/gnustep/core/gnustep-base-${BASE_VERSION}.tar.gz && tar -xf gnustep-base-${BASE_VERSION}.tar.gz
+git clone https://github.com/etoile/UnitKit
 
 # libdispatch
-cd libdispatch
+cd libdispatch && git clean -dfx && git checkout bd1808980b04830cbbd79c959b8bc554085e38a1
 mkdir build && cd build
 ../configure && make && sudo make install || exit 1
 cd ../..
 
 # libobjc2
-cd libobjc2
+cd libobjc2  && git clean -dfx && git checkout tags/v${LIB_OBJC2_VERSION}
 mkdir build && cd build
 cmake .. && make -j8 && sudo make install || exit 1
 cd ../..
 
 # gnustep make
-cd make
+cd gnustep-make-${BASE_VERSION}
 ./configure --enable-debug-by-default --enable-objc-nonfragile-abi --enable-objc-arc && make && sudo make install || exit 1
 cd ..
 source /usr/local/share/GNUstep/Makefiles/GNUstep.sh || exit 1
 
 # gnustep base
-cd base
+cd gnustep-base-${BASE_VERSION}
 ./configure --disable-mixedabi && make -j8 && sudo make install || exit 1
 cd ..
 
 # UnitKit
-cd UnitKit
+cd UnitKit && git clean -dfx
 wget https://raw.githubusercontent.com/etoile/Etoile/master/etoile.make
 make -j8 && sudo make install || exit 1
 make test=yes && ukrun -q TestSource/TestUnitKit/TestUnitKit.bundle || exit 1
