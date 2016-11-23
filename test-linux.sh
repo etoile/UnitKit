@@ -33,7 +33,7 @@ cmake .. && make -j8 && sudo make install || exit 1
 cd ../..
 
 # gnustep make
-cd gnustep-make-${BASE_VERSION}
+cd gnustep-make-${MAKE_VERSION}
 ./configure --enable-debug-by-default --enable-objc-nonfragile-abi --enable-objc-arc && make && sudo make install || exit 1
 cd ..
 source /usr/local/share/GNUstep/Makefiles/GNUstep.sh || exit 1
