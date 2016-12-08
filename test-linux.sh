@@ -10,9 +10,6 @@ MAKE_VERSION=2.6.1
 BASE_VERSION=1.24.9
 
 # deps
-# Hack to work around hardcoded paths in LLVM-Config.cmake
-sudo apt-get -y remove llvm-3.5 llvm-3.5-dev clang-3.5 clang-3.5-dev
-sudo apt-get -y purge llvm-3.5 llvm-3.5-dev clang-3.5 clang-3.5-dev
 sudo apt-get -y install llvm-3.8-dev
 sudo apt-get -y install libblocksruntime-dev libkqueue-dev libpthread-workqueue-dev cmake
 sudo apt-get -y install libxml2-dev libxslt1-dev libffi-dev libssl-dev libgnutls-dev libicu-dev libgmp3-dev
@@ -36,7 +33,8 @@ cd ../..
 # libobjc2
 cd libobjc2  && git clean -dfx && git checkout tags/v${LIBOBJC2_VERSION}
 mkdir build && cd build
-cmake .. && make -j8 && sudo make install || exit 1
+# Skip LLVM package check to work around hardcoded paths in LLVM-Config.cmake
+cmake .. -DCMAKE_DISABLE_FIND_PACKAGE_LLVM=TRUE && make -j8 && sudo make install || exit 1
 cd ../..
 
 # gnustep make
