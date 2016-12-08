@@ -12,6 +12,7 @@ BASE_VERSION=1.24.9
 # deps
 # Hack to work around hardcoded paths in LLVM-Config.cmake
 sudo apt-get -y remove llvm-3.5
+sudo apt-get -y purge llvm-3.5
 sudo apt-get -y install llvm-3.8-dev
 sudo apt-get -y install libblocksruntime-dev libkqueue-dev libpthread-workqueue-dev cmake
 sudo apt-get -y install libxml2-dev libxslt1-dev libffi-dev libssl-dev libgnutls-dev libicu-dev libgmp3-dev
