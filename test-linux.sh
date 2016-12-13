@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -o verbose
-
 export CC=clang-3.8
 export CXX=clang++-3.8
 
@@ -51,6 +49,6 @@ cd ..
 # UnitKit
 cd UnitKit && git clean -dfx
 wget https://raw.githubusercontent.com/etoile/Etoile/master/etoile.make
-make -j8 && sudo make install || exit 1
-make test=yes && ukrun -q TestSource/TestUnitKit/TestUnitKit.bundle || exit 1
-cd ..
+make -j8 messages=yes & sudo make install || exit 1
+make -j8 messages=yes test=yes  && ukrun -q TestSource/TestUnitKit/TestUnitKit.bundle || exit 1
+cd .. 
