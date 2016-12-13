@@ -21,3 +21,4 @@ include ../../compilerflags.preamble
 
 include $(GNUSTEP_MAKEFILES)/framework.make
 -include ../../../../etoile.make
+-include ../../etoile.make

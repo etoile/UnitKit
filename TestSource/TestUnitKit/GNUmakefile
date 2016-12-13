@@ -16,6 +16,7 @@ include ../../compilerflags.preamble
 
 include $(GNUSTEP_MAKEFILES)/bundle.make
 -include ../../../../etoile.make
+-include ../../etoile.make
 
 export TEST_BUNDLE_PATH = $(PROJECT_DIR)/TestSource/TestBundle/TestBundle.bundle 
 export TEST_BUNDLE_LINK_PATH = $(PROJECT_DIR)/TestSource/TestUnitKit/TestBundle.bundle 

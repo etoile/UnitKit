@@ -14,3 +14,4 @@ include ../../compilerflags.preamble
 
 include $(GNUSTEP_MAKEFILES)/bundle.make
 -include ../../../../etoile.make
+-include ../../etoile.make
