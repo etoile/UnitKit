@@ -10,7 +10,6 @@ MAKE_VERSION=2.6.7
 BASE_VERSION=1.24.9
 
 # deps
-sudo apt-get -y install llvm-3.8-dev
 sudo apt-get -y install libblocksruntime-dev libkqueue-dev libpthread-workqueue-dev cmake
 sudo apt-get -y install libxml2-dev libxslt1-dev libffi-dev libssl-dev libgnutls-dev libicu-dev libgmp3-dev
 sudo apt-get -y install libjpeg-dev libtiff-dev libpng-dev libgif-dev libx11-dev libcairo2-dev libxft-dev libxmu-dev 
@@ -48,6 +47,7 @@ cd gnustep-base-${BASE_VERSION}
 cd ..
 
 # UnitKit
+git clean -dfx
 wget https://raw.githubusercontent.com/etoile/Etoile/master/etoile.make
 make -j8 messages=yes && sudo make install || exit 1
 make -j8 messages=yes test=yes && ukrun -q TestSource/TestUnitKit/TestUnitKit.bundle || exit 1

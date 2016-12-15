@@ -1,12 +1,10 @@
-#notifications:
-#  email:
-#    recipients:
-#     - etoile-testbuild@gna.org
+notifications:
+  email:
+    recipients:
+     - etoile-testbuild@gna.org
 
 language: generic
-
 compiler: gcc
-
 os:
   - linux
   - osx
