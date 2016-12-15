@@ -22,7 +22,6 @@ git clone https://github.com/gnustep/libobjc2
 # 2.6.8 breaks --disable-mixedabi by omitting -fobjc-nonfragile-abi among the compiler flags
 wget -N ftp://ftp.gnustep.org/pub/gnustep/core/gnustep-make-${MAKE_VERSION}.tar.gz && tar -xf gnustep-make-${MAKE_VERSION}.tar.gz
 wget -N ftp://ftp.gnustep.org/pub/gnustep/core/gnustep-base-${BASE_VERSION}.tar.gz && tar -xf gnustep-base-${BASE_VERSION}.tar.gz
-git clone https://github.com/etoile/UnitKit
 
 # libdispatch
 cd libdispatch && git clean -dfx && git checkout bd1808980b04830cbbd79c959b8bc554085e38a1
@@ -49,8 +48,6 @@ cd gnustep-base-${BASE_VERSION}
 cd ..
 
 # UnitKit
-cd UnitKit && git clean -dfx
 wget https://raw.githubusercontent.com/etoile/Etoile/master/etoile.make
 make -j8 messages=yes && sudo make install || exit 1
 make -j8 messages=yes test=yes && ukrun -q TestSource/TestUnitKit/TestUnitKit.bundle || exit 1
-cd ..
