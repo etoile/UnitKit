@@ -616,7 +616,6 @@
 				AE70B64E05F7100400D56367 /* Headers */,
 				AE70B64F05F7100400D56367 /* Resources */,
 				AE70B65005F7100400D56367 /* Sources */,
-				AE70B65105F7100400D56367 /* Rez */,
 				AE70B65205F7100400D56367 /* Frameworks */,
 			);
 			buildRules = (
@@ -636,7 +635,6 @@
 				AE923B2805C3B1CE00549058 /* Headers */,
 				AE923B2905C3B1CE00549058 /* Sources */,
 				AE923B2A05C3B1CE00549058 /* Frameworks */,
-				6048470218BC9FC7006E4EDC /* Report Test Suite Results in Xcode Warnings (to debug the test suite, use TestUnitKit) */,
 				60B98EEF1805609900D1FFFF /* CopyFiles */,
 				60B98EF4180560E300D1FFFF /* CopyFiles */,
 				60B98EF61805611700D1FFFF /* CopyFiles */,
@@ -779,31 +777,7 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXRezBuildPhase section */
-		AE70B65105F7100400D56367 /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXRezBuildPhase section */
-
 /* Begin PBXShellScriptBuildPhase section */
-		6048470218BC9FC7006E4EDC /* Report Test Suite Results in Xcode Warnings (to debug the test suite, use TestUnitKit) */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Report Test Suite Results in Xcode Warnings (to debug the test suite, use TestUnitKit)";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# export the build dir as the framework path and point\n# at the currently built ukrun so that we test out just\n# what's being built here and not an already installed\n# copy\nexport DYLD_FRAMEWORK_PATH=$LIBRARY_SEARCH_PATHS:$TARGET_BUILD_DIR\ncd $TARGET_BUILD_DIR\n$TARGET_BUILD_DIR/ukrun -q \"$TARGET_BUILD_DIR/$WRAPPER_NAME\"\n";
-		};
 		6048476818BE9DFD006E4EDC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1081,8 +1055,8 @@
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -1099,8 +1073,8 @@
 				DSTROOT = /;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				SDKROOT = macosx;
 				STRIP_INSTALLED_PRODUCT = NO;
 				WARNING_CFLAGS = "-Wall";
